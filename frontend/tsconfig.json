@@ -13,13 +13,9 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "types": ["vite/client", "node"]
   },
-  "include": ["frontend/**/*", "backend/**/*"],
-  "exclude": [
-    "node_modules",
-    "**/*.docs.mdx",
-    "**/*.spec.ts"
-  ]
+  "include": ["src", "index.ts", "App.tsx", "main.tsx"],
+  "exclude": ["node_modules", "dist", "**/*.docs.mdx"]
 }

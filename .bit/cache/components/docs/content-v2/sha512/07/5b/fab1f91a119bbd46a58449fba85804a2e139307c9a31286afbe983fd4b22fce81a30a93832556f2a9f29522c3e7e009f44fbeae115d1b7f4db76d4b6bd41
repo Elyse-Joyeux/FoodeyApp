@@ -1,1 +1,0 @@
-[{"filePath":"src/components/topbar.tsx","name":"Topbar","description":"Page header with back button, title, notifications bell and profile avatar.","properties":[{"name":"title","description":"","required":true,"type":"string"},{"name":"subtitle","description":"","required":false,"type":"string"}],"access":"public","methods":[],"args":[],"examples":[]}]

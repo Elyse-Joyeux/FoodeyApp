@@ -1,3 +1,34 @@
 {
-  "type": "module"
+  "name": "foodey",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1",
+    "build": "npm run build:frontend",
+    "preview": "npm run preview:frontend",
+    "dev:frontend": "cd frontend && vite --host 127.0.0.1",
+    "build:frontend": "cd frontend && vite build",
+    "preview:frontend": "cd frontend && vite preview",
+    "dev:backend": "tsx backend/main.ts",
+    "start:backend": "node --loader tsx backend/main.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.16.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.25",
+    "@types/node": "^20.14.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vite": "^8.0.15"
+  }
 }

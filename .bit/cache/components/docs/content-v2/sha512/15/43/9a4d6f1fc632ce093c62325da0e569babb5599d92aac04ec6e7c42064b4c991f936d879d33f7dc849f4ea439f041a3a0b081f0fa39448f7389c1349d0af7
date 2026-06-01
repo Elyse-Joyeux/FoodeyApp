@@ -1,1 +1,0 @@
-[{"name":"","description":"Generic data hook that fetches JSON from the Foodey backend.\nFalls back to the provided default data when the request fails,\nso the UI always renders (useful in previews and offline mode).","args":[],"returns":{},"access":"public","examples":[],"render":"","properties":[],"static":false,"filePath":"src/data/use-api.ts"}]

@@ -1,9 +1,0 @@
-[
-  {
-    "id": {
-      "scope": "bitdev.platforms",
-      "name": "backend/gateway-server"
-    },
-    "head": "d9b1c94c0fc5a3871d029383f19ddf3a4e413a0e"
-  }
-]

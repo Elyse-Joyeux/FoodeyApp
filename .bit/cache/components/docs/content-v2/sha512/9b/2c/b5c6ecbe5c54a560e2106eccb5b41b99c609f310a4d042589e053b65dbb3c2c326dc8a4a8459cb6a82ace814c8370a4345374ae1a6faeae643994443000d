@@ -1,1 +1,0 @@
-[{"filePath":"src/components/dashboard-layout.tsx","name":"DashboardLayout","description":"Shell wrapping the sidebar and the routed page content.","properties":[{"name":"children","description":"","required":true,"type":"ReactReactNode"}],"access":"public","methods":[],"args":[],"examples":[]}]
