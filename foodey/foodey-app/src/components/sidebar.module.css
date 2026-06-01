@@ -1,0 +1,77 @@
+.sidebar {
+  width: var(--foodey-sidebar-width);
+  min-width: var(--foodey-sidebar-width);
+  background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
+  border-right: 1px solid var(--foodey-border);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 18px 24px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  margin-bottom: 38px;
+  padding-left: 6px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: var(--foodey-radius);
+  color: var(--foodey-text-dim);
+  text-decoration: none;
+  transition: all .18s ease;
+}
+
+.item:hover {
+  background: var(--foodey-card);
+  color: var(--foodey-text);
+}
+
+.iconWrap {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--foodey-card-2);
+  color: var(--foodey-orange);
+}
+
+.active {
+  background: var(--foodey-orange);
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.active .iconWrap {
+  background: rgba(0,0,0,.15);
+  color: #1a1a1a;
+}
+
+.label {
+  font-size: .82rem;
+}
+
+.logout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--foodey-orange);
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 12px;
+}

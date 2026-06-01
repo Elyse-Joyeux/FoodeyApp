@@ -1,0 +1,17 @@
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.tab { background: var(--foodey-card-2); border: none; color: var(--foodey-text-dim); padding: 11px 22px; border-radius: 10px; cursor: pointer; font-size: .92rem; }
+.tabActive { background: var(--foodey-orange); color: #1a1a1a; font-weight: 600; }
+
+.tableWrap { display: flex; flex-direction: column; gap: 4px; }
+.headRow, .row { display: grid; grid-template-columns: 1.4fr 1.1fr 1.3fr 1.2fr 1fr 1fr .9fr 1fr; gap: 14px; padding: 16px 22px; align-items: center; }
+.headRow { color: var(--foodey-orange); font-size: .85rem; }
+.row { background: var(--foodey-card); border-radius: var(--foodey-radius); font-size: .9rem; }
+.row:nth-child(even) { background: var(--foodey-card-2); }
+.email { color: var(--foodey-text-dim); }
+.status { color: var(--foodey-green); }
+.total { font-weight: 600; }
+
+@media (max-width: 1100px) {
+  .headRow { display: none; }
+  .row { grid-template-columns: 1fr 1fr; }
+}

@@ -1,0 +1,12 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--foodey-bg);
+}
+
+.content {
+  flex: 1;
+  padding: 28px 36px;
+  overflow-x: hidden;
+  min-width: 0;
+}

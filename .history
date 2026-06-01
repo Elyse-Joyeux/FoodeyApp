@@ -1,0 +1,8 @@
+git config --global user.email "elysejoyeux590@gmail.com"
+git config --global user.name "Elyse-Joyeux"
+github
+git
+git branch
+git init
+git init -b main
+git remote add origin https://github.com/Elyse-Joyeux/FoodeyApp

@@ -1,0 +1,15 @@
+.layout { display: grid; grid-template-columns: 420px 1fr; gap: 40px; }
+.sectionTitle { font-size: 1.5rem; font-weight: 700; margin: 0 0 18px; }
+
+.imageCol { display: flex; flex-direction: column; }
+.profileImg { width: 100%; max-width: 380px; aspect-ratio: 1; border-radius: 14px; object-fit: cover; }
+.change { color: var(--foodey-orange); text-decoration: underline; font-size: .9rem; margin: 14px 0 24px; cursor: pointer; }
+.confirm { background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 15px; font-weight: 700; cursor: pointer; max-width: 380px; margin-bottom: 14px; }
+.cancel { background: none; color: var(--foodey-orange); border: 1px solid var(--foodey-orange); border-radius: var(--foodey-radius); padding: 15px; font-weight: 700; cursor: pointer; max-width: 380px; }
+
+.card { background: var(--foodey-card); border-radius: var(--foodey-radius-lg); padding: 26px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 30px; margin-bottom: 30px; border: 1px solid var(--foodey-border); }
+.field.full { grid-column: 1 / -1; }
+.fieldLabel { color: var(--foodey-orange); font-size: .9rem; margin-bottom: 6px; }
+.fieldValue { font-size: 1.05rem; }
+
+@media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } .card { grid-template-columns: 1fr; } }

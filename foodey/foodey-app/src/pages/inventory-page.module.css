@@ -1,0 +1,30 @@
+.headRow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+.count { font-size: 1.4rem; font-weight: 400; margin: 0; color: var(--foodey-text-dim); }
+.count strong { color: var(--foodey-text); font-size: 1.7rem; }
+.addBtn { background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 13px 26px; font-weight: 700; cursor: pointer; }
+
+.layout { display: grid; grid-template-columns: 340px 1fr; gap: 24px; }
+
+.filters { background: var(--foodey-bg-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius-lg); padding: 22px; }
+.filterTitle { font-size: 1.2rem; margin: 0 0 16px; }
+.statusGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.statusBtn { display: flex; justify-content: space-between; align-items: center; background: var(--foodey-card-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 14px 16px; color: var(--foodey-text); cursor: pointer; }
+.statusActive { border-color: var(--foodey-orange); }
+.badge { color: var(--foodey-orange); }
+
+.filter { margin-bottom: 16px; }
+.filterLabel { display: block; margin-bottom: 8px; font-size: .92rem; }
+.reset { width: 100%; background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+
+.list { display: flex; flex-direction: column; gap: 4px; background: var(--foodey-bg-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius-lg); padding: 8px; }
+.row { display: grid; grid-template-columns: 60px 1.6fr 1fr 1fr 1fr 36px 36px; align-items: center; gap: 16px; padding: 14px 16px; border-radius: var(--foodey-radius); }
+.row:nth-child(even) { background: var(--foodey-card); }
+.rowImg { width: 50px; height: 42px; border-radius: 8px; object-fit: cover; }
+.name { font-weight: 600; }
+.sub { color: var(--foodey-text-muted); font-size: .8rem; }
+.colLabel { color: var(--foodey-text-muted); font-size: .78rem; }
+.colVal { font-weight: 600; font-size: .9rem; margin-top: 2px; }
+.act { background: none; border: none; color: var(--foodey-orange); cursor: pointer; }
+.del { background: none; border: none; color: var(--foodey-red); cursor: pointer; }
+
+@media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } .row { grid-template-columns: 50px 1.5fr 1fr 1fr; } }

@@ -1,0 +1,69 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--foodey-card-2);
+  color: var(--foodey-text);
+  border: none;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  color: var(--foodey-text-dim);
+  font-size: .9rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bell {
+  background: none;
+  border: none;
+  color: var(--foodey-text);
+  cursor: pointer;
+}
+
+.divider {
+  width: 1px;
+  height: 28px;
+  background: var(--foodey-border);
+}
+
+.avatarBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
