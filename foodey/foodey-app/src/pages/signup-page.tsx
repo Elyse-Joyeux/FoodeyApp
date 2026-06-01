@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthLayout } from '../components/auth-layout.js';
-import { MailIcon, LockIcon, EyeOffIcon } from '../components/icons.js';
+import { MailIcon, LockIcon, EyeOffIcon, BackIcon } from '../components/icons.js';
 import card from '../components/auth-card.module.css';
 
 /** Registration screen for new restaurant accounts. */
@@ -21,6 +21,7 @@ export function SignupPage() {
       blurb="Sign up and register your restaurant."
     >
       <form className={card.card} onSubmit={submit}>
+        <button type="button" className={card.backBtn} onClick={() => navigate('/')} aria-label="Back"><BackIcon size={18} /></button>
         <h2 className={card.title}>Sign Up</h2>
         <p className={card.sub}>Please enter relevant information below to continue</p>
 

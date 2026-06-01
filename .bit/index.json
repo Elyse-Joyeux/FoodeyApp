@@ -23,6 +23,30 @@
       },
       "isSymlink": false,
       "hash": "1547bfb70aacb3fdc11449388fd73ffc164a00e9"
+    },
+    {
+      "id": {
+        "scope": "bitdev.node",
+        "name": "node-server"
+      },
+      "isSymlink": false,
+      "hash": "3d9dfebc8c3985750c7421779af507d52c159d3c"
+    },
+    {
+      "id": {
+        "scope": "bitdev.platforms",
+        "name": "platform"
+      },
+      "isSymlink": false,
+      "hash": "efdb657d914858203b6cb626c8530d375cad97d3"
+    },
+    {
+      "id": {
+        "scope": "bitdev.react",
+        "name": "app-types/vite-react"
+      },
+      "isSymlink": false,
+      "hash": "7c7b0e8b950507675eb26a304d7d26defab275a7"
     }
   ],
   "lanes": []

@@ -56,6 +56,9 @@
   border-radius: 50%;
   border: 1.5px solid var(--foodey-orange);
   flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: var(--foodey-orange);
 }
 
 .featureTitle { font-weight: 700; font-size: 1.05rem; }

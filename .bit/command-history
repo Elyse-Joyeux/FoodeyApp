@@ -240,3 +240,106 @@
 2026-06-01T06:14:25.585Z 10072 ls --json, succeeded
 2026-06-01T06:15:29.772Z 10263 check-types, started
 2026-06-01T06:15:33.090Z 10263 check-types, succeeded
+2026-06-01T06:44:26.781Z 13342 status --json, started
+2026-06-01T06:44:29.544Z 13395 get-deps codingship.foodey/foodey-app,codingship.foodey/foodey-platform,codingship.foodey/foodey-service --json -c, started
+2026-06-01T06:44:30.990Z 13342 status --json, succeeded
+2026-06-01T06:44:32.187Z 13395 get-deps codingship.foodey/foodey-app,codingship.foodey/foodey-platform,codingship.foodey/foodey-service --json -c, succeeded
+2026-06-01T06:46:04.070Z 13468 status --json, started
+2026-06-01T06:46:06.943Z 13468 status --json, succeeded
+2026-06-01T06:48:27.595Z 13627 mini-status --json, started
+2026-06-01T06:48:27.606Z 13608 ls --json, started
+2026-06-01T06:48:27.647Z 13627 mini-status --json, succeeded
+2026-06-01T06:48:27.676Z 13608 ls --json, succeeded
+2026-06-01T06:48:34.641Z 13698 remove cors @types/cors --silent, started
+2026-06-01T06:48:35.373Z 13716 deps remove foodey/foodey-service cors @types/cors, started
+2026-06-01T06:48:37.878Z 13716 deps remove foodey/foodey-service cors @types/cors, succeeded
+2026-06-01T06:48:55.366Z 13839 mini-status --json, started
+2026-06-01T06:48:55.408Z 13837 ls --json, started
+2026-06-01T06:48:55.419Z 13839 mini-status --json, succeeded
+2026-06-01T06:48:55.478Z 13837 ls --json, succeeded
+2026-06-01T06:49:57.948Z 14011 mini-status --json, started
+2026-06-01T06:49:57.994Z 14012 ls --json, started
+2026-06-01T06:49:58.002Z 14011 mini-status --json, succeeded
+2026-06-01T06:49:58.066Z 14012 ls --json, succeeded
+2026-06-01T06:50:46.672Z 14184 ls --json, started
+2026-06-01T06:50:46.726Z 14207 mini-status --json, started
+2026-06-01T06:50:46.742Z 14184 ls --json, succeeded
+2026-06-01T06:50:46.782Z 14207 mini-status --json, succeeded
+2026-06-01T06:51:04.557Z 14372 mini-status --json, started
+2026-06-01T06:51:04.598Z 14370 ls --json, started
+2026-06-01T06:51:04.608Z 14372 mini-status --json, succeeded
+2026-06-01T06:51:04.668Z 14370 ls --json, succeeded
+2026-06-01T06:51:47.181Z 14506 mini-status --json, started
+2026-06-01T06:51:47.238Z 14506 mini-status --json, succeeded
+2026-06-01T06:51:47.260Z 14507 ls --json, started
+2026-06-01T06:51:47.352Z 14507 ls --json, succeeded
+2026-06-01T06:52:30.387Z 14683 mini-status --json, started
+2026-06-01T06:52:30.444Z 14683 mini-status --json, succeeded
+2026-06-01T06:52:30.450Z 14681 ls --json, started
+2026-06-01T06:52:30.530Z 14681 ls --json, succeeded
+2026-06-01T06:52:49.355Z 14824 mini-status --json, started
+2026-06-01T06:52:49.365Z 14805 ls --json, started
+2026-06-01T06:52:49.414Z 14824 mini-status --json, succeeded
+2026-06-01T06:52:49.443Z 14805 ls --json, succeeded
+2026-06-01T06:53:23.540Z 14968 mini-status --json, started
+2026-06-01T06:53:23.603Z 14966 ls --json, started
+2026-06-01T06:53:23.613Z 14968 mini-status --json, succeeded
+2026-06-01T06:53:23.675Z 14966 ls --json, succeeded
+2026-06-01T06:53:44.988Z 15116 mini-status --json, started
+2026-06-01T06:53:45.035Z 15114 ls --json, started
+2026-06-01T06:53:45.049Z 15116 mini-status --json, succeeded
+2026-06-01T06:53:45.105Z 15114 ls --json, succeeded
+2026-06-01T06:54:15.570Z 15305 mini-status --json, started
+2026-06-01T06:54:15.615Z 15309 ls --json, started
+2026-06-01T06:54:15.625Z 15305 mini-status --json, succeeded
+2026-06-01T06:54:15.686Z 15309 ls --json, succeeded
+2026-06-01T06:54:27.304Z 15445 mini-status --json, started
+2026-06-01T06:54:27.358Z 15445 mini-status --json, succeeded
+2026-06-01T06:54:27.407Z 15464 ls --json, started
+2026-06-01T06:54:27.477Z 15464 ls --json, succeeded
+2026-06-01T06:55:28.519Z 15595 mini-status --json, started
+2026-06-01T06:55:28.573Z 15595 mini-status --json, succeeded
+2026-06-01T06:55:28.681Z 15618 ls --json, started
+2026-06-01T06:55:28.752Z 15618 ls --json, succeeded
+2026-06-01T06:56:06.862Z 15743 mini-status --json, started
+2026-06-01T06:56:06.902Z 15744 ls --json, started
+2026-06-01T06:56:06.918Z 15743 mini-status --json, succeeded
+2026-06-01T06:56:06.973Z 15744 ls --json, succeeded
+2026-06-01T06:57:25.154Z 15982 mini-status --json, started
+2026-06-01T06:57:25.207Z 15975 ls --json, started
+2026-06-01T06:57:25.213Z 15982 mini-status --json, succeeded
+2026-06-01T06:57:25.280Z 15975 ls --json, succeeded
+2026-06-01T06:58:25.597Z 16164 mini-status --json, started
+2026-06-01T06:58:25.649Z 16164 mini-status --json, succeeded
+2026-06-01T06:58:25.663Z 16165 ls --json, started
+2026-06-01T06:58:25.732Z 16165 ls --json, succeeded
+2026-06-01T06:59:09.986Z 16257 check-types, started
+2026-06-01T06:59:13.286Z 16257 check-types, succeeded
+2026-06-01T06:59:39.968Z 16376 run foodey-platform -p 3001, started
+2026-06-01T07:02:36.358Z 16657 mini-status --json, started
+2026-06-01T07:02:36.404Z 16659 ls --json, started
+2026-06-01T07:02:36.412Z 16657 mini-status --json, succeeded
+2026-06-01T07:02:36.474Z 16659 ls --json, succeeded
+2026-06-01T07:02:39.921Z 16743 status --json, started
+2026-06-01T07:02:43.361Z 16743 status --json, succeeded
+2026-06-01T07:03:09.942Z 16844 mini-status --json, started
+2026-06-01T07:03:09.998Z 16844 mini-status --json, succeeded
+2026-06-01T07:03:10.068Z 16863 ls --json, started
+2026-06-01T07:03:10.140Z 16863 ls --json, succeeded
+2026-06-01T07:03:35.253Z 16981 check-types, started
+2026-06-01T07:03:38.598Z 16981 check-types, succeeded
+2026-06-01T07:04:09.286Z 17109 run foodey-platform -p 3001, started
+2026-06-01T07:05:09.808Z 17311 check-types, started
+2026-06-01T07:05:12.618Z 17311 check-types, succeeded
+2026-06-01T07:05:41.661Z 17447 run foodey-platform -p 3001, started
+2026-06-01T07:05:59.902Z 17589 check-types, started
+2026-06-01T07:06:02.703Z 17589 check-types, succeeded
+2026-06-01T07:15:58.409Z 17901 status --json, started
+2026-06-01T07:16:01.507Z 17901 status --json, succeeded
+2026-06-01T07:17:35.600Z 18210 mini-status --json, started
+2026-06-01T07:17:35.681Z 18191 ls --json, started
+2026-06-01T07:17:35.711Z 18210 mini-status --json, succeeded
+2026-06-01T07:17:35.804Z 18191 ls --json, succeeded
+2026-06-01T07:18:00.076Z 18353 check-types, started
+2026-06-01T07:18:03.474Z 18353 check-types, succeeded
+2026-06-01T07:18:09.918Z 18472 run foodey-platform -p 3001, started

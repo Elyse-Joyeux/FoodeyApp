@@ -1,0 +1,1 @@
+[{"name":"","description":"Boots the Foodey express service exposing REST CRUD endpoints for every module.\nCORS is handled by the platform gateway, so it is not configured here.","args":[],"returns":{},"access":"public","examples":[],"render":"","properties":[],"static":false,"filePath":"foodey-service.app-root.ts"}]

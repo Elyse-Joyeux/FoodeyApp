@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { Topbar } from '../components/topbar.js';
 import { UserIcon, ChevronDown, LogoutIcon, EyeOffIcon } from '../components/icons.js';
+import { useApi, apiPost, apiPut, apiDelete } from '../data/use-api.js';
 import styles from './profile-page.module.css';
 
 const AVATAR = 'https://api.v2.bit.cloud/file-upload/api/bf3c8ae9929e2601ca4c6e7caa146a1e.png';
 
 type Section = 'profile' | 'access';
+type Perm = 'Dashboard' | 'Reports' | 'Inventory' | 'Orders' | 'Settings';
+type AccessUser = { id: string; name: string; email: string; role: string; permissions: Record<Perm, boolean> };
 
-const ACCESS_USERS = [
-  { name: 'Abubakar Sherazi', role: 'Admin', email: 'kagabo12@gmail.com' },
-  { name: 'Annes Ansari', role: 'Sub Admin', email: 'annesansari@gmail.com' },
+const PERMS: Perm[] = ['Dashboard', 'Reports', 'Inventory', 'Orders', 'Settings'];
+const FALLBACK: AccessUser[] = [
+  { id: 'au1', name: 'Abubakar Sherazi', email: 'kagabo12@gmail.com', role: 'Admin', permissions: { Dashboard: true, Reports: true, Inventory: true, Orders: true, Settings: true } },
+  { id: 'au2', name: 'Annes Ansari', email: 'annesansari@gmail.com', role: 'Sub Admin', permissions: { Dashboard: true, Reports: true, Inventory: true, Orders: true, Settings: true } },
 ];
-const PERMS = ['Dashboard', 'Reports', 'Inventory', 'Orders', 'Settings'];
 
 /** Profile page with My Profile and Manage Access sections. */
 export function ProfilePage() {
@@ -38,6 +41,7 @@ export function ProfilePage() {
 }
 
 function MyProfile() {
+  const [saved, setSaved] = useState(false);
   return (
     <div className={styles.card}>
       <h3 className={styles.cardTitle}>Personal Information</h3>
@@ -49,9 +53,9 @@ function MyProfile() {
         </div>
       </div>
 
-      <Field label="Full Name" value="Jacques Kagabo" />
-      <Field label="Email" value="kagabo12@gmail.com" />
-      <Field label="Address" value="123 Street, Kigali, Gikondo" />
+      <Field label="Full Name" defaultValue="Jacques Kagabo" />
+      <Field label="Email" defaultValue="kagabo12@gmail.com" />
+      <Field label="Address" defaultValue="123 Street, Kigali, Gikondo" />
       <div className={styles.twoCol}>
         <PassField label="Password" />
         <PassField label="Confirm Password" />
@@ -59,52 +63,102 @@ function MyProfile() {
 
       <div className={styles.actions}>
         <button className={styles.discard}>Discard Changes</button>
-        <button className={styles.save}>Save Changes</button>
+        <button className={styles.save} onClick={() => { setSaved(true); setTimeout(() => setSaved(false), 1500); }}>
+          {saved ? 'Saved ✓' : 'Save Changes'}
+        </button>
       </div>
     </div>
   );
 }
 
 function ManageAccess() {
+  const { data: users, setData, refetch } = useApi<AccessUser[]>('access-users', FALLBACK);
+  const [draft, setDraft] = useState({ name: '', email: '', role: '', password: '' });
+  const [showPass, setShowPass] = useState(false);
+
+  const toggle = async (userId: string, perm: Perm) => {
+    let next = false;
+    setData((prev) => prev.map((u) => {
+      if (u.id !== userId) return u;
+      next = !u.permissions[perm];
+      return { ...u, permissions: { ...u.permissions, [perm]: next } };
+    }));
+    await apiPut(`access-users/${userId}/permission`, { perm, value: next });
+  };
+
+  const addUser = async () => {
+    if (!draft.name) return;
+    await apiPost('access-users', { name: draft.name, email: draft.email, role: draft.role || 'Sub Admin' });
+    setDraft({ name: '', email: '', role: '', password: '' });
+    refetch();
+  };
+
+  const removeUser = async (id: string) => {
+    setData((prev) => prev.filter((u) => u.id !== id));
+    await apiDelete(`access-users/${id}`);
+  };
+
   return (
-    <div className={styles.card}>
-      {ACCESS_USERS.map((u) => (
-        <div key={u.name} className={styles.accessUser}>
-          <div className={styles.accessHead}>
-            <span className={styles.accessName}>{u.name}</span>
-            <span className={styles.roleTag}>{u.role}</span>
-          </div>
-          <div className={styles.accessEmail}>{u.email}</div>
-          <div className={styles.perms}>
-            {PERMS.map((p) => (
-              <div key={p} className={styles.perm}>
-                <div className={styles.permLabel}>{p}</div>
-                <span className={styles.toggle}><span className={styles.knob} /></span>
-              </div>
-            ))}
-          </div>
+    <div className={styles.accessLayout}>
+      <div className={styles.addCard}>
+        <input className={styles.addInput} placeholder="Full Name" value={draft.name} onChange={(e) => setDraft({ ...draft, name: e.target.value })} />
+        <input className={styles.addInput} placeholder="Email" value={draft.email} onChange={(e) => setDraft({ ...draft, email: e.target.value })} />
+        <input className={styles.addInput} placeholder="Role" value={draft.role} onChange={(e) => setDraft({ ...draft, role: e.target.value })} />
+        <div className={styles.passWrap}>
+          <input className={styles.addInput} type={showPass ? 'text' : 'password'} placeholder="Password" value={draft.password} onChange={(e) => setDraft({ ...draft, password: e.target.value })} />
+          <button className={styles.passEye} onClick={() => setShowPass((s) => !s)} type="button"><EyeOffIcon size={18} /></button>
         </div>
-      ))}
+        <button className={styles.addBtn} onClick={addUser}>Add</button>
+      </div>
+
+      <div className={styles.card}>
+        {users.map((u) => (
+          <div key={u.id} className={styles.accessUser}>
+            <div className={styles.accessHead}>
+              <span className={styles.accessName}>{u.name}</span>
+              <span className={styles.roleTag}>{u.role}</span>
+              <button className={styles.removeUser} onClick={() => removeUser(u.id)}>Remove</button>
+            </div>
+            <div className={styles.accessEmail}>{u.email}</div>
+            <div className={styles.perms}>
+              {PERMS.map((p) => (
+                <div key={p} className={styles.perm}>
+                  <div className={styles.permLabel}>{p}</div>
+                  <button
+                    type="button"
+                    className={`${styles.toggle} ${u.permissions[p] ? styles.toggleOn : styles.toggleOff}`}
+                    onClick={() => toggle(u.id, p)}
+                    aria-pressed={u.permissions[p]}
+                  >
+                    <span className={styles.knob} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-function Field({ label, value }: { label: string; value: string }) {
+function Field({ label, defaultValue }: { label: string; defaultValue: string }) {
   return (
     <div className={styles.field}>
       <label className={styles.fieldLabel}>{label}</label>
-      <div className={styles.fieldInput}>{value}</div>
+      <input className={styles.fieldInput} defaultValue={defaultValue} />
     </div>
   );
 }
 
 function PassField({ label }: { label: string }) {
+  const [show, setShow] = useState(false);
   return (
     <div className={styles.field}>
       <label className={styles.fieldLabel}>{label}</label>
       <div className={styles.passInput}>
-        <span>••••••</span>
-        <EyeOffIcon size={18} />
+        <input type={show ? 'text' : 'password'} defaultValue="secret1" className={styles.passField} />
+        <button className={styles.passEye} onClick={() => setShow((s) => !s)} type="button"><EyeOffIcon size={18} /></button>
       </div>
     </div>
   );

@@ -258,3 +258,81 @@
 2026-06-01T06:23:55.203Z 8127 show codingship.foodey/foodey-app, succeeded
 2026-06-01T06:26:33.384Z 7961 show codingship.foodey/foodey-app, started
 2026-06-01T06:26:33.385Z 7961 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:48:25.970Z 6967 mini-status codingship.foodey/foodey-service --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:48:26.077Z 6967 mini-status codingship.foodey/foodey-service --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:48:54.214Z 3980 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:48:54.226Z 3980 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:48:54.233Z 8089 show codingship.foodey/foodey-app, started
+2026-06-01T06:48:54.235Z 8089 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:49:56.958Z 4255 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:49:56.965Z 4255 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:49:56.969Z 4739 show codingship.foodey/foodey-app, started
+2026-06-01T06:49:56.970Z 4739 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:50:45.576Z 5549 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:50:45.580Z 5549 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:50:45.583Z 6792 show codingship.foodey/foodey-app, started
+2026-06-01T06:50:45.584Z 6792 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:51:03.428Z 3738 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:51:03.432Z 3738 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:51:03.435Z 2677 show codingship.foodey/foodey-app, started
+2026-06-01T06:51:03.436Z 2677 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:51:46.328Z 7577 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:51:46.332Z 7577 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:51:46.334Z 6640 show codingship.foodey/foodey-app, started
+2026-06-01T06:51:46.335Z 6640 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:52:28.682Z 8301 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:52:28.687Z 8301 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:52:28.690Z 1468 show codingship.foodey/foodey-app, started
+2026-06-01T06:52:28.692Z 1468 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:52:48.402Z 4697 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:52:48.408Z 4697 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:52:48.411Z 5197 show codingship.foodey/foodey-app, started
+2026-06-01T06:52:48.412Z 5197 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:53:22.283Z 1838 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:53:22.288Z 1838 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:53:22.291Z 3580 show codingship.foodey/foodey-app, started
+2026-06-01T06:53:22.292Z 3580 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:53:43.863Z 2248 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:53:43.867Z 2248 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:53:43.870Z 367 show codingship.foodey/foodey-app, started
+2026-06-01T06:53:43.870Z 367 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:54:14.424Z 7996 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:54:14.428Z 7996 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:54:14.431Z 1317 show codingship.foodey/foodey-app, started
+2026-06-01T06:54:14.432Z 1317 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:54:26.117Z 4712 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:54:26.122Z 4712 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:54:26.124Z 1726 show codingship.foodey/foodey-app, started
+2026-06-01T06:54:26.125Z 1726 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:55:27.225Z 1172 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:55:27.230Z 1172 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:55:27.233Z 1673 show codingship.foodey/foodey-app, started
+2026-06-01T06:55:27.234Z 1673 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:56:05.672Z 8906 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:56:05.677Z 8906 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:56:05.679Z 4654 show codingship.foodey/foodey-app, started
+2026-06-01T06:56:05.680Z 4654 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:57:23.862Z 3013 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:57:24.529Z 3013 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:57:24.537Z 9244 show codingship.foodey/foodey-app, started
+2026-06-01T06:57:24.539Z 9244 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:57:24.544Z 9157 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:57:24.551Z 9157 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:57:24.554Z 9194 show codingship.foodey/foodey-app, started
+2026-06-01T06:57:24.554Z 9194 show codingship.foodey/foodey-app, succeeded
+2026-06-01T06:58:24.561Z 2041 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T06:58:24.565Z 2041 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T06:58:24.567Z 6331 show codingship.foodey/foodey-app, started
+2026-06-01T06:58:24.568Z 6331 show codingship.foodey/foodey-app, succeeded
+2026-06-01T07:02:35.025Z 8120 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T07:02:35.030Z 8120 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T07:02:35.033Z 8870 show codingship.foodey/foodey-app, started
+2026-06-01T07:02:35.033Z 8870 show codingship.foodey/foodey-app, succeeded
+2026-06-01T07:03:08.834Z 5244 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T07:03:08.838Z 5244 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T07:03:08.842Z 2510 show codingship.foodey/foodey-app, started
+2026-06-01T07:03:08.843Z 2510 show codingship.foodey/foodey-app, succeeded
+2026-06-01T07:17:34.231Z 7371 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, started
+2026-06-01T07:17:34.238Z 7371 mini-status codingship.foodey/foodey-app --showIssues --ignoreCircularDependencies, succeeded
+2026-06-01T07:17:34.242Z 5381 show codingship.foodey/foodey-app, started
+2026-06-01T07:17:34.244Z 5381 show codingship.foodey/foodey-app, succeeded

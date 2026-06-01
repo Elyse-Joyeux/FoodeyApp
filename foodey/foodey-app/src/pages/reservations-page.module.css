@@ -3,7 +3,8 @@
 .tabActive { background: var(--foodey-orange); color: #1a1a1a; font-weight: 600; }
 
 .tableWrap { display: flex; flex-direction: column; gap: 4px; }
-.headRow, .row { display: grid; grid-template-columns: 1.4fr 1.1fr 1.3fr 1.2fr 1fr 1fr .9fr 1fr; gap: 14px; padding: 16px 22px; align-items: center; }
+.headRow, .row { display: grid; grid-template-columns: 1.4fr 1.1fr 1.3fr 1.2fr 1fr 1fr 1fr 40px; gap: 14px; padding: 16px 22px; align-items: center; }
+.del { background: none; border: none; color: var(--foodey-red); cursor: pointer; display: grid; place-items: center; }
 .headRow { color: var(--foodey-orange); font-size: .85rem; }
 .row { background: var(--foodey-card); border-radius: var(--foodey-radius); font-size: .9rem; }
 .row:nth-child(even) { background: var(--foodey-card-2); }

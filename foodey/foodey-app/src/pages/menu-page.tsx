@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Topbar } from '../components/topbar.js';
 import { Drawer } from '../components/drawer.js';
-import { ImageIcon, ChevronDown, EditIcon, TrashIcon } from '../components/icons.js';
-import { useApi } from '../data/use-api.js';
+import { ImageIcon, ChevronDown, EditIcon, TrashIcon, GridIcon, PizzaIcon, BurgerIcon, DrumstickIcon, BreadIcon, DrinkIcon } from '../components/icons.js';
+import { useApi, apiPost, apiDelete } from '../data/use-api.js';
 import { mockCategories, mockMenuItems } from '../data/mock-data.js';
 import type { MenuCategory, MenuItem } from '../types.js';
 import styles from './menu-page.module.css';
@@ -12,11 +12,29 @@ const TABS = ['Normal menu', 'Special Deals', 'New Year Special', 'Deserts and D
 
 /** Menu management: categories grid, special-menu tabs and the items table. */
 export function MenuPage() {
-  const { data: categories } = useApi<MenuCategory[]>('categories', mockCategories);
-  const { data: items } = useApi<MenuItem[]>('menu', mockMenuItems);
+  const { data: categories, refetch: refetchCats } = useApi<MenuCategory[]>('categories', mockCategories);
+  const { data: items, setData: setItems, refetch } = useApi<MenuItem[]>('menu', mockMenuItems);
   const [activeCat, setActiveCat] = useState('all');
   const [tab, setTab] = useState(0);
   const [drawer, setDrawer] = useState<'category' | null>(null);
+  const [catName, setCatName] = useState('');
+
+  const saveCategory = async () => {
+    await apiPost('categories', { name: catName || 'New Category', icon: 'grid' });
+    setCatName('');
+    setDrawer(null);
+    refetchCats();
+  };
+
+  const addItem = async () => {
+    await apiPost('menu', { name: 'New Dish', category: 'Chicken', price: 45, stock: '100 items', description: 'Freshly added menu item', availability: 'In Stock' });
+    refetch();
+  };
+
+  const deleteItem = async (id: string) => {
+    setItems((prev) => prev.filter((m) => m.id !== id));
+    await apiDelete(`menu/${id}`);
+  };
 
   return (
     <>
@@ -48,7 +66,7 @@ export function MenuPage() {
             <button key={t} className={`${styles.tab} ${tab === i ? styles.tabActive : ''}`} onClick={() => setTab(i)}>{t}</button>
           ))}
         </div>
-        <button className={styles.addItem}>Add Menu Item</button>
+        <button className={styles.addItem} onClick={addItem}>Add Menu Item</button>
       </div>
 
       <div className={styles.tableWrap}>
@@ -76,7 +94,7 @@ export function MenuPage() {
                 <td>
                   <div className={styles.acts}>
                     <button className={styles.act}><EditIcon size={18} /></button>
-                    <button className={styles.del}><TrashIcon size={18} /></button>
+                    <button className={styles.del} onClick={() => deleteItem(m.id)}><TrashIcon size={18} /></button>
                   </div>
                 </td>
               </tr>
@@ -90,7 +108,7 @@ export function MenuPage() {
         <div className={form.avatarUpload}><ImageIcon size={48} /></div>
         <span className={form.changePic}>Change Icon</span>
         <div className={form.grid}>
-          <div className={`${form.field} ${form.fieldFull}`}><label className={form.label}>Category Name</label><input className={form.input} placeholder="Enter category name" /></div>
+          <div className={`${form.field} ${form.fieldFull}`}><label className={form.label}>Category Name</label><input className={form.input} placeholder="Enter category name" value={catName} onChange={(e) => setCatName(e.target.value)} /></div>
           <div className={`${form.field} ${form.fieldFull}`}><label className={form.label}>Select Menu</label>
             <div className={form.inputIcon}><select className={form.select}><option>Select Menu</option><option>Normal menu</option><option>Special Deals</option></select><span className={form.icn}><ChevronDown size={18} /></span></div>
           </div>
@@ -98,7 +116,7 @@ export function MenuPage() {
         </div>
         <div className={form.actions}>
           <button className={form.cancel} onClick={() => setDrawer(null)}>Cancel</button>
-          <button className={form.save} onClick={() => setDrawer(null)}>Save</button>
+          <button className={form.save} onClick={saveCategory}>Save</button>
         </div>
       </Drawer>
     </>
@@ -106,6 +124,12 @@ export function MenuPage() {
 }
 
 function iconFor(icon: string) {
-  const map: Record<string, string> = { grid: '▦', pizza: '🍕', burger: '🍔', chicken: '🍗', bakery: '🍞', beverage: '🥤' };
-  return map[icon] || '🍽️';
+  switch (icon) {
+    case 'pizza': return <PizzaIcon size={24} />;
+    case 'burger': return <BurgerIcon size={24} />;
+    case 'chicken': return <DrumstickIcon size={24} />;
+    case 'bakery': return <BreadIcon size={24} />;
+    case 'beverage': return <DrinkIcon size={24} />;
+    default: return <GridIcon size={24} />;
+  }
 }

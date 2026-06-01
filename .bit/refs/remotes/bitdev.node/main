@@ -5,5 +5,12 @@
       "name": "node-env"
     },
     "head": "eb6adcc47b7682cc543d0d5010da0d366f66c33d"
+  },
+  {
+    "id": {
+      "scope": "bitdev.node",
+      "name": "node-server"
+    },
+    "head": "851814fb8fe41ebf55537ecd16e62aa512072dcd"
   }
 ]

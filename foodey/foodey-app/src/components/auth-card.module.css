@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   width: 100%;
   max-width: 460px;
   background: rgba(20,20,20,.92);
@@ -7,6 +8,22 @@
   padding: 38px 36px;
   backdrop-filter: blur(6px);
 }
+
+.backBtn {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--foodey-card-2);
+  border: 1px solid var(--foodey-border);
+  color: var(--foodey-orange);
+  cursor: pointer;
+}
+.backBtn:hover { background: var(--foodey-card-hover); }
 
 .title {
   text-align: center;

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Logo } from './logo.js';
+import { ChartIcon, MenuBookIcon, UsersIcon } from './icons.js';
 import styles from './auth-layout.module.css';
 
 const FOOD_IMG = 'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=900&q=80';
 
-type Feature = { title: string; desc: string };
+type Feature = { title: string; desc: string; Icon: (p: { size?: number }) => React.ReactElement };
 
 const FEATURES: Feature[] = [
-  { title: 'Smart Analytics', desc: 'Track sales and grow faster' },
-  { title: 'Menu Management', desc: 'Update your menu in seconds' },
-  { title: 'Happy Customers', desc: 'Deliver an exceptional experience' },
+  { title: 'Smart Analytics', desc: 'Track sales and grow faster', Icon: ChartIcon },
+  { title: 'Menu Management', desc: 'Update your menu in seconds', Icon: MenuBookIcon },
+  { title: 'Happy Customers', desc: 'Deliver an exceptional experience', Icon: UsersIcon },
 ];
 
 type AuthLayoutProps = {
@@ -35,7 +36,7 @@ export function AuthLayout({ welcomeTop, welcomeBottom, blurb, showFeatures = tr
           <div className={styles.features}>
             {FEATURES.map((f) => (
               <div key={f.title} className={styles.feature}>
-                <span className={styles.featureIcon} />
+                <span className={styles.featureIcon}><f.Icon size={26} /></span>
                 <div>
                   <div className={styles.featureTitle}>{f.title}</div>
                   <div className={styles.featureDesc}>{f.desc}</div>

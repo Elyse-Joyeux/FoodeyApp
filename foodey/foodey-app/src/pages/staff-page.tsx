@@ -3,31 +3,61 @@ import { useNavigate } from 'react-router-dom';
 import { Topbar } from '../components/topbar.js';
 import { Drawer } from '../components/drawer.js';
 import { EyeIcon, EditIcon, TrashIcon, ImageIcon, ChevronDown, CalendarIcon, ClockIcon } from '../components/icons.js';
-import { useApi } from '../data/use-api.js';
+import { useApi, apiPost, apiPut, apiDelete } from '../data/use-api.js';
 import { mockStaff, mockAttendance } from '../data/mock-data.js';
 import type { StaffMember, AttendanceRecord } from '../types.js';
 import styles from './staff-page.module.css';
 import form from '../components/form.module.css';
 
 type Tab = 'management' | 'attendance';
+type StaffDraft = { name: string; email: string; role: string; phone: string; salary: string; dob: string; shiftStart: string; shiftEnd: string };
+
+const EMPTY: StaffDraft = { name: '', email: '', role: '', phone: '', salary: '', dob: '', shiftStart: '', shiftEnd: '' };
 
 /** Staff management page with management table, attendance tab and add/edit drawers. */
 export function StaffPage() {
   const navigate = useNavigate();
-  const { data: staff } = useApi<StaffMember[]>('staff', mockStaff);
-  const { data: attendance } = useApi<AttendanceRecord[]>('attendance', mockAttendance);
+  const { data: staff, setData: setStaff, refetch } = useApi<StaffMember[]>('staff', mockStaff);
+  const { data: attendance, setData: setAttendance } = useApi<AttendanceRecord[]>('attendance', mockAttendance);
   const [tab, setTab] = useState<Tab>('management');
   const [drawer, setDrawer] = useState<'add' | 'edit' | null>(null);
   const [editing, setEditing] = useState<StaffMember | null>(null);
+
+  const saveStaff = async (draft: StaffDraft) => {
+    const payload = {
+      name: draft.name, email: draft.email, role: draft.role, phone: draft.phone,
+      salary: Number(String(draft.salary).replace(/[^0-9.]/g, '')) || 0,
+      dob: draft.dob, shiftStart: draft.shiftStart, shiftEnd: draft.shiftEnd,
+      timings: `${draft.shiftStart || '9am'} to ${draft.shiftEnd || '10pm'}`,
+    };
+    if (drawer === 'edit' && editing) {
+      await apiPut(`staff/${encodeURIComponent(editing.id)}`, payload);
+    } else {
+      await apiPost('staff', payload);
+    }
+    setDrawer(null);
+    setEditing(null);
+    refetch();
+  };
+
+  const deleteStaff = async (id: string) => {
+    setStaff((prev) => prev.filter((s) => s.id !== id));
+    await apiDelete(`staff/${encodeURIComponent(id)}`);
+  };
+
+  const setStatus = async (id: string, status: AttendanceRecord['status']) => {
+    setAttendance((prev) => prev.map((a) => (a.id === id ? { ...a, status } : a)));
+    await apiPut(`attendance/${encodeURIComponent(id)}`, { status });
+  };
 
   return (
     <>
       <Topbar title="Staff Management" />
 
       <div className={styles.headRow}>
-        <h2 className={styles.count}>Staff(22)</h2>
+        <h2 className={styles.count}>Staff({staff.length})</h2>
         <div className={styles.headActions}>
-          <button className={styles.addBtn} onClick={() => setDrawer('add')}>Add Staff</button>
+          <button className={styles.addBtn} onClick={() => { setEditing(null); setDrawer('add'); }}>Add Staff</button>
           <button className={styles.sortBtn}>Sort by <ChevronDown size={16} /></button>
         </div>
       </div>
@@ -47,8 +77,8 @@ export function StaffPage() {
               </tr>
             </thead>
             <tbody>
-              {staff.slice(0, 9).map((s, i) => (
-                <tr key={i}>
+              {staff.map((s) => (
+                <tr key={s.id}>
                   <td><input type="checkbox" /></td>
                   <td>{s.id}</td>
                   <td>
@@ -69,7 +99,7 @@ export function StaffPage() {
                     <div className={styles.rowActions}>
                       <button className={styles.act} onClick={() => navigate(`/staff/${encodeURIComponent(s.id)}`)} title="View"><EyeIcon size={18} /></button>
                       <button className={styles.act} onClick={() => { setEditing(s); setDrawer('edit'); }} title="Edit"><EditIcon size={18} /></button>
-                      <button className={styles.del} title="Delete"><TrashIcon size={18} /></button>
+                      <button className={styles.del} title="Delete" onClick={() => deleteStaff(s.id)}><TrashIcon size={18} /></button>
                     </div>
                   </td>
                 </tr>
@@ -78,21 +108,18 @@ export function StaffPage() {
           </table>
         </div>
       ) : (
-        <AttendanceTable rows={attendance} />
+        <AttendanceTable rows={attendance} onSet={setStatus} />
       )}
 
-      <Drawer open={drawer === 'add'} onClose={() => setDrawer(null)}>
-        <StaffForm title="Add Staff" onClose={() => setDrawer(null)} />
-      </Drawer>
-      <Drawer open={drawer === 'edit'} onClose={() => setDrawer(null)}>
-        <StaffForm title="Edit Staff" member={editing} onClose={() => setDrawer(null)} />
+      <Drawer open={drawer !== null} onClose={() => { setDrawer(null); setEditing(null); }}>
+        <StaffForm title={drawer === 'edit' ? 'Edit Staff' : 'Add Staff'} member={editing} onSave={saveStaff} onClose={() => { setDrawer(null); setEditing(null); }} />
       </Drawer>
     </>
   );
 }
 
-/** Attendance sub-table with status action buttons. */
-function AttendanceTable({ rows }: { rows: AttendanceRecord[] }) {
+/** Attendance sub-table with status action buttons wired to the backend. */
+function AttendanceTable({ rows, onSet }: { rows: AttendanceRecord[]; onSet: (id: string, status: AttendanceRecord['status']) => void }) {
   return (
     <div className={styles.tableWrap}>
       <table className={styles.table}>
@@ -100,8 +127,8 @@ function AttendanceTable({ rows }: { rows: AttendanceRecord[] }) {
           <tr><th><input type="checkbox" /></th><th>ID</th><th>Name</th><th>Date</th><th>Timings</th><th>Status</th></tr>
         </thead>
         <tbody>
-          {rows.map((r, i) => (
-            <tr key={i}>
+          {rows.map((r) => (
+            <tr key={r.id}>
               <td><input type="checkbox" /></td>
               <td>{r.id}</td>
               <td>
@@ -114,13 +141,13 @@ function AttendanceTable({ rows }: { rows: AttendanceRecord[] }) {
               <td>{r.timings}</td>
               <td>
                 {r.status ? (
-                  <span className={styles.statusPill}>{r.status} <EditIcon size={14} /></span>
+                  <span className={styles.statusPill}>{r.status} <button className={styles.pillEdit} onClick={() => onSet(r.id, '')}><EditIcon size={14} /></button></span>
                 ) : (
                   <div className={styles.statusBtns}>
-                    <button className={styles.present}>Present</button>
-                    <button className={styles.absent}>Absent</button>
-                    <button className={styles.half}>Half Shift</button>
-                    <button className={styles.leave}>Leave</button>
+                    <button className={styles.present} onClick={() => onSet(r.id, 'Present')}>Present</button>
+                    <button className={styles.absent} onClick={() => onSet(r.id, 'Absent')}>Absent</button>
+                    <button className={styles.half} onClick={() => onSet(r.id, 'Half Shift')}>Half Shift</button>
+                    <button className={styles.leave} onClick={() => onSet(r.id, 'Leave')}>Leave</button>
                   </div>
                 )}
               </td>
@@ -132,8 +159,15 @@ function AttendanceTable({ rows }: { rows: AttendanceRecord[] }) {
   );
 }
 
-/** Add/Edit staff form rendered inside the drawer. */
-function StaffForm({ title, member, onClose }: { title: string; member?: StaffMember | null; onClose: () => void }) {
+/** Add/Edit staff form rendered inside the drawer (controlled inputs). */
+function StaffForm({ title, member, onSave, onClose }: { title: string; member?: StaffMember | null; onSave: (d: StaffDraft) => void; onClose: () => void }) {
+  const [draft, setDraft] = useState<StaffDraft>(member ? {
+    name: member.name, email: member.email, role: member.role, phone: member.phone,
+    salary: `$${member.salary}.00`, dob: member.dob, shiftStart: member.shiftStart, shiftEnd: member.shiftEnd,
+  } : EMPTY);
+
+  const set = (k: keyof StaffDraft) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setDraft((d) => ({ ...d, [k]: e.target.value }));
+
   return (
     <>
       <h2 className={form.drawerTitle}>{title}</h2>
@@ -143,28 +177,28 @@ function StaffForm({ title, member, onClose }: { title: string; member?: StaffMe
       <span className={form.changePic}>Change profile picture</span>
 
       <div className={form.grid}>
-        <div className={form.field}><label className={form.label}>Full Name</label><input className={form.input} placeholder="Enter full name" defaultValue={member?.name} /></div>
-        <div className={form.field}><label className={form.label}>Email</label><input className={form.input} placeholder="Enter email address" defaultValue={member?.email} /></div>
+        <div className={form.field}><label className={form.label}>Full Name</label><input className={form.input} placeholder="Enter full name" value={draft.name} onChange={set('name')} /></div>
+        <div className={form.field}><label className={form.label}>Email</label><input className={form.input} placeholder="Enter email address" value={draft.email} onChange={set('email')} /></div>
         <div className={form.field}><label className={form.label}>Role</label>
-          <select className={form.select} defaultValue={member?.role || ''}><option value="" disabled>Select role</option><option>Manager</option><option>Waiter</option><option>Chef</option></select>
+          <select className={form.select} value={draft.role} onChange={set('role')}><option value="" disabled>Select role</option><option>Manager</option><option>Waiter</option><option>Chef</option></select>
         </div>
-        <div className={form.field}><label className={form.label}>Phone number</label><input className={form.input} placeholder="Enter phone number" defaultValue={member?.phone} /></div>
-        <div className={form.field}><label className={form.label}>Salary</label><input className={form.input} placeholder="Enter salary" defaultValue={member ? `$${member.salary}.00` : ''} /></div>
+        <div className={form.field}><label className={form.label}>Phone number</label><input className={form.input} placeholder="Enter phone number" value={draft.phone} onChange={set('phone')} /></div>
+        <div className={form.field}><label className={form.label}>Salary</label><input className={form.input} placeholder="Enter salary" value={draft.salary} onChange={set('salary')} /></div>
         <div className={form.field}><label className={form.label}>Date of birth</label>
-          <div className={form.inputIcon}><input className={form.input} placeholder="Enter date of birth" defaultValue={member?.dob} /><span className={form.icn}><CalendarIcon size={18} /></span></div>
+          <div className={form.inputIcon}><input className={form.input} placeholder="Enter date of birth" value={draft.dob} onChange={set('dob')} /><span className={form.icn}><CalendarIcon size={18} /></span></div>
         </div>
         <div className={form.field}><label className={form.label}>Shift start time</label>
-          <div className={form.inputIcon}><input className={form.input} placeholder="Enter starting time" defaultValue={member?.shiftStart} /><span className={form.icn}><ClockIcon size={18} /></span></div>
+          <div className={form.inputIcon}><input className={form.input} placeholder="Enter starting time" value={draft.shiftStart} onChange={set('shiftStart')} /><span className={form.icn}><ClockIcon size={18} /></span></div>
         </div>
         <div className={form.field}><label className={form.label}>Shift end time</label>
-          <div className={form.inputIcon}><input className={form.input} placeholder="Enter end time" defaultValue={member?.shiftEnd} /><span className={form.icn}><ClockIcon size={18} /></span></div>
+          <div className={form.inputIcon}><input className={form.input} placeholder="Enter end time" value={draft.shiftEnd} onChange={set('shiftEnd')} /><span className={form.icn}><ClockIcon size={18} /></span></div>
         </div>
         <div className={`${form.field} ${form.fieldFull}`}><label className={form.label}>Additional details</label><textarea className={form.textarea} placeholder="Enter additional details" /></div>
       </div>
 
       <div className={form.actions}>
         <button className={form.cancel} onClick={onClose}>Cancel</button>
-        <button className={form.save} onClick={onClose}>Confirm</button>
+        <button className={form.save} onClick={() => onSave(draft)}>Confirm</button>
       </div>
     </>
   );

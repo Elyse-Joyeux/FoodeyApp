@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthLayout } from '../components/auth-layout.js';
-import { UserIcon, LockIcon, EyeOffIcon, ShieldIcon } from '../components/icons.js';
+import { UserIcon, LockIcon, EyeOffIcon, ShieldIcon, BackIcon } from '../components/icons.js';
 import card from '../components/auth-card.module.css';
 
 /** Login screen with username/password, OTP option and links to sign up / forgot password. */
@@ -21,6 +21,7 @@ export function LoginPage() {
       blurb="Sign in to continue to manage your restaurant like a pro."
     >
       <form className={card.card} onSubmit={submit}>
+        <button type="button" className={card.backBtn} onClick={() => navigate('/')} aria-label="Back"><BackIcon size={18} /></button>
         <h2 className={card.title}>Login<span className={card.bang}>!</span></h2>
         <p className={card.sub}>Please enter your credentials below to continue</p>
 

@@ -5,5 +5,12 @@
       "name": "react-env"
     },
     "head": "fce4d1841f9c72617395901f87be7211ae2b5512"
+  },
+  {
+    "id": {
+      "scope": "bitdev.react",
+      "name": "app-types/vite-react"
+    },
+    "head": "53dc4c5182d0ac2deb70212035c7f845b411da12"
   }
 ]

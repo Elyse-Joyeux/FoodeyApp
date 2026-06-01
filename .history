@@ -6,3 +6,11 @@ git branch
 git init
 git init -b main
 git remote add origin https://github.com/Elyse-Joyeux/FoodeyApp
+git add .
+git commit -m "Initial commit: Set up repository structure for FoodeyApp"
+git push -u origin main
+git push -u origin master
+git pull
+clear
+git checkout -b bit-changes
+git push -u origin bit-changes

@@ -5,5 +5,12 @@
       "name": "backend/gateway-server"
     },
     "head": "d9b1c94c0fc5a3871d029383f19ddf3a4e413a0e"
+  },
+  {
+    "id": {
+      "scope": "bitdev.platforms",
+      "name": "platform"
+    },
+    "head": "8d5d6cb6ff4ab0067d0600638b04fcd5c778064b"
   }
 ]
