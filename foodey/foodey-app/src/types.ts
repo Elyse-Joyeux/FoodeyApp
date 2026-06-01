@@ -36,6 +36,7 @@ export type MenuItem = {
   category: string;
   price: number;
   availability: 'In Stock' | 'Out of Stock';
+  menu?: string;
 };
 
 export type MenuCategory = {

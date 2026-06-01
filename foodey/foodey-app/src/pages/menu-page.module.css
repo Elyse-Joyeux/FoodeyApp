@@ -23,6 +23,8 @@
 .prodName { font-weight: 600; }
 .prodDesc { color: var(--foodey-text-muted); font-size: .8rem; max-width: 220px; }
 .avail { color: var(--foodey-orange); }
+.unavail { color: var(--foodey-red); }
+.emptyRow { text-align: center; color: var(--foodey-text-dim); padding: 40px !important; }
 .acts { display: flex; gap: 12px; }
 .act { background: none; border: none; color: var(--foodey-orange); cursor: pointer; }
 .del { background: none; border: none; color: var(--foodey-red); cursor: pointer; }

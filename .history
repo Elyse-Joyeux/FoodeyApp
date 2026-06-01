@@ -14,3 +14,12 @@ git pull
 clear
 git checkout -b bit-changes
 git push -u origin bit-changes
+git checkout bit-changes
+git status
+git add -A
+git commit -m "Add Bit Cloud UI changes"
+git push origin bit-changes
+clear
+git status
+git chekout -bit-changes
+clear

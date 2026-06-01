@@ -1,0 +1,1 @@
+[{"name":"","description":"Seeds the database with initial demo data, but only when a collection is\nempty — so user-created records persist across restarts.","args":[],"returns":{},"access":"public","examples":[],"render":"","properties":[],"static":false,"filePath":"seed.ts"}]

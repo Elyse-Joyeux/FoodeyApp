@@ -1,0 +1,1 @@
+[{"name":"","description":"Boots the Foodey express service. Connects to MongoDB when MONGO_URL is set\nand seeds demo data once; all reads/writes persist to the database.","args":[],"returns":{},"access":"public","examples":[],"render":"","properties":[],"static":false,"filePath":"foodey-service.app-root.ts"}]

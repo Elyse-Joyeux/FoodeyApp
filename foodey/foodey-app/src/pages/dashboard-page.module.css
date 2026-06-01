@@ -36,10 +36,11 @@
 }
 .dishHead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
 .dishHead h3 { margin: 0; font-size: 1.3rem; }
-.seeAll { color: var(--foodey-orange); font-size: .85rem; cursor: pointer; text-decoration: underline; }
+.seeAll { color: var(--foodey-orange); font-size: .85rem; cursor: pointer; text-decoration: underline; background: none; border: none; }
 
 .dishList { display: flex; flex-direction: column; gap: 10px; }
-.dish { display: flex; align-items: center; gap: 14px; background: var(--foodey-card-2); border-radius: var(--foodey-radius); padding: 10px 14px; }
+.dish { display: flex; align-items: center; gap: 14px; background: var(--foodey-card-2); border-radius: var(--foodey-radius); padding: 10px 14px; cursor: pointer; transition: background .15s ease; }
+.dish:hover { background: var(--foodey-card-hover); }
 .dishImg { width: 46px; height: 46px; border-radius: 10px; object-fit: cover; }
 .dishInfo { flex: 1; }
 .dishName { font-weight: 600; }

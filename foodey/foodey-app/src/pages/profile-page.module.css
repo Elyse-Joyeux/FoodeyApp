@@ -20,6 +20,7 @@
 
 .actions { display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-top: 14px; }
 .discard { background: none; border: none; color: var(--foodey-text); cursor: pointer; }
+.discard:disabled { color: var(--foodey-text-muted); cursor: not-allowed; }
 .save { background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 14px 30px; font-weight: 700; cursor: pointer; }
 
 .accessUser { padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--foodey-border); }
@@ -35,11 +36,20 @@
 .knob { width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: all .2s ease; }
 
 .accessLayout { display: flex; flex-direction: column; gap: 20px; }
-.addCard { display: grid; grid-template-columns: 1fr 1fr 1fr 1.2fr auto; gap: 12px; align-items: center; background: var(--foodey-card); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius-lg); padding: 18px 20px; }
-.addInput { background: var(--foodey-card-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 13px 14px; color: var(--foodey-text); outline: none; width: 100%; }
+.addCard { background: var(--foodey-card); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius-lg); padding: 24px 26px; }
+.addCardHead { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.addCardIcon { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,165,0,.14); color: var(--foodey-orange); display: grid; place-items: center; flex-shrink: 0; }
+.addCardTitle { margin: 0; font-size: 1.15rem; font-weight: 700; }
+.addCardSub { margin: 2px 0 0; color: var(--foodey-text-dim); font-size: .85rem; }
+.addGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
+.addField { display: flex; flex-direction: column; gap: 8px; }
+.addLabel { font-weight: 600; font-size: .86rem; color: var(--foodey-text-dim); }
+.addInput { background: var(--foodey-card-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 13px 14px; color: var(--foodey-text); outline: none; width: 100%; transition: border-color .2s ease; }
+.addInput:focus { border-color: var(--foodey-orange); }
 .passWrap { position: relative; display: flex; align-items: center; }
 .passWrap .passEye { position: absolute; right: 12px; }
-.addBtn { background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 13px 26px; font-weight: 700; cursor: pointer; }
+.addBtn { display: inline-flex; align-items: center; gap: 8px; background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 13px 28px; font-weight: 700; cursor: pointer; transition: filter .2s ease; }
+.addBtn:hover { filter: brightness(1.05); }
 .removeUser { margin-left: auto; background: none; border: 1px solid var(--foodey-red); color: var(--foodey-red); border-radius: 8px; padding: 6px 14px; cursor: pointer; font-size: .82rem; }
 
-@media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } .perms { grid-template-columns: 1fr 1fr; } .twoCol { grid-template-columns: 1fr; } .addCard { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } .perms { grid-template-columns: 1fr 1fr; } .twoCol { grid-template-columns: 1fr; } .addGrid { grid-template-columns: 1fr; } }
