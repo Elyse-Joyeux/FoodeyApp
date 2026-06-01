@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Topbar } from '../components/topbar.js';
 import { SearchIcon, EditIcon, TrashIcon, CheckIcon, ChevronDown } from '../components/icons.js';
-import { useApi } from '../data/use-api.js';
+import { useApi, apiPost, apiDelete } from '../data/use-api.js';
 import { mockOrders } from '../data/mock-data.js';
 import type { Order } from '../types.js';
 import styles from './orders-page.module.css';
@@ -10,13 +10,27 @@ const TABS = ['All', 'In Process', 'Completed', 'Cancelled'];
 
 /** Orders / Table page showing order cards grouped in a grid. */
 export function OrdersPage() {
-  const { data: orders } = useApi<Order[]>('orders', mockOrders);
+  const { data: orders, setData: setOrders, refetch } = useApi<Order[]>('orders', mockOrders);
   const [tab, setTab] = useState('All');
+  const [query, setQuery] = useState('');
 
-  const filtered = tab === 'All' ? orders : orders.filter((o) =>
+  const byTab = tab === 'All' ? orders : orders.filter((o) =>
     tab === 'In Process' ? o.status === 'In Process' :
     tab === 'Completed' ? o.status === 'Completed' || o.status === 'Ready' :
     o.status === 'Cancelled');
+  const filtered = query
+    ? byTab.filter((o) => o.customer.toLowerCase().includes(query.toLowerCase()) || o.orderId.includes(query))
+    : byTab;
+
+  const addOrder = async () => {
+    await apiPost('orders', { customer: 'New Customer', status: 'In Process', subStatus: 'Cooking Now' });
+    refetch();
+  };
+
+  const removeOrder = async (id: string) => {
+    setOrders((prev) => prev.filter((o) => o.id !== id));
+    await apiDelete(`orders/${id}`);
+  };
 
   return (
     <>
@@ -29,8 +43,8 @@ export function OrdersPage() {
           ))}
         </div>
         <div className={styles.right}>
-          <button className={styles.addBtn}>Add New Order</button>
-          <div className={styles.search}><SearchIcon size={20} /><input placeholder="Search a name, order, etc" /></div>
+          <button className={styles.addBtn} onClick={addOrder}>Add New Order</button>
+          <div className={styles.search}><SearchIcon size={20} /><input placeholder="Search a name, order, etc" value={query} onChange={(e) => setQuery(e.target.value)} /></div>
         </div>
       </div>
 
@@ -64,7 +78,7 @@ export function OrdersPage() {
             <div className={styles.subTotal}><span>Sub total</span><span>${o.subTotal}</span></div>
             <div className={styles.cardActions}>
               <button className={styles.iconBtn}><EditIcon size={18} /></button>
-              <button className={styles.iconBtn}><TrashIcon size={18} /></button>
+              <button className={styles.iconBtn} onClick={() => removeOrder(o.id)}><TrashIcon size={18} /></button>
               <button className={styles.pay}>Pay Bill</button>
             </div>
           </div>
