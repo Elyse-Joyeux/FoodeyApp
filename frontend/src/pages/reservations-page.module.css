@@ -1,6 +1,10 @@
 .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
 .tab { background: var(--foodey-card-2); border: none; color: var(--foodey-text-dim); padding: 11px 22px; border-radius: 10px; cursor: pointer; font-size: .92rem; }
 .tabActive { background: var(--foodey-orange); color: #1a1a1a; font-weight: 600; }
+.tabCount { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: rgba(0,0,0,.18); font-size: .72rem; font-weight: 700; margin-left: 4px; }
+.tab:not(.tabActive) .tabCount { background: var(--foodey-card-hover); }
+
+.empty { text-align: center; color: var(--foodey-text-dim); padding: 50px 20px; background: var(--foodey-card); border-radius: var(--foodey-radius); }
 
 .tableWrap { display: flex; flex-direction: column; gap: 4px; }
 .headRow, .row { display: grid; grid-template-columns: 1.4fr 1.1fr 1.3fr 1.2fr 1fr 1fr 1fr 40px; gap: 14px; padding: 16px 22px; align-items: center; }

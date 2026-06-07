@@ -5,6 +5,5 @@ describe('foodey service', () => {
     const foodeyService = FoodeyService.from();
     const greeting = await foodeyService.getHello();
     expect(greeting).toEqual('Hello World!');
-  })
+  });
 });
-    

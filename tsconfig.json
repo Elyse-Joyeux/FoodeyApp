@@ -16,7 +16,7 @@
     "jsx": "preserve",
     "types": ["vite/client", "node"]
   },
-  "include": ["frontend/**/*", "backend/**/*"],
+  "include": ["frontend/**/*"],
   "exclude": [
     "node_modules",
     "**/*.docs.mdx",

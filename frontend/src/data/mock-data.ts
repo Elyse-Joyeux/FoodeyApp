@@ -6,14 +6,16 @@ import type {
 const AVATAR = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=128&q=80&fit=crop&crop=faces';
 const DISH_IMG = 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=200&q=80';
 
+const STAFF_NAMES = ['Jacques Kagabo', 'Aline Uwase', 'Eric Mugisha', 'Sandra Keza', 'David Niyonzima', 'Grace Ingabire', 'Patrick Habimana', 'Diane Umutoni', 'Kevin Rwego', 'Sarah Mukamana'];
+const STAFF_ROLES = ['Manager', 'Chef', 'Waiter'];
 export const mockStaff: StaffMember[] = Array.from({ length: 22 }).map((_, i) => ({
   id: `#10${i + 1}`,
-  name: 'Jacques Kagabo',
-  role: 'Manager',
-  email: 'kagabo12@gmail.com',
+  name: STAFF_NAMES[i % STAFF_NAMES.length],
+  role: STAFF_ROLES[i % STAFF_ROLES.length],
+  email: `${STAFF_NAMES[i % STAFF_NAMES.length].split(' ')[0].toLowerCase()}@foodey.com`,
   phone: '+250(798532708)',
-  age: 45,
-  salary: 2200,
+  age: 22 + ((i * 7) % 38),
+  salary: 1500 + ((i * 437) % 4000),
   timings: '9am to 10pm',
   avatar: AVATAR,
   dob: '01-Jan-1983',
@@ -80,6 +82,7 @@ export const mockOrders: Order[] = Array.from({ length: 6 }).map((_, i) => {
   };
 });
 
+const RES_STATUSES: Reservation['status'][] = ['Confirmed', 'Awaited', 'Cancelled', 'Failed', 'Fulfilled'];
 export const mockReservations: Reservation[] = Array.from({ length: 10 }).map((_, i) => ({
   id: `r${i + 1}`,
   email: 'kagabo12@gmail.com',
@@ -89,7 +92,7 @@ export const mockReservations: Reservation[] = Array.from({ length: 10 }).map((_
   checkIn: '03:18 PM',
   checkOut: '05: 20 PM',
   total: 5500,
-  status: 'Confirmed',
+  status: RES_STATUSES[i % RES_STATUSES.length],
 }));
 
 export const mockNotifications: Notification[] = Array.from({ length: 7 }).map((_, i) => ({

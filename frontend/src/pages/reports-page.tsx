@@ -6,20 +6,24 @@ import { mockReservationSummary, mockReservations } from '../data/mock-data.js';
 import type { ReservationSummary, Reservation } from '../types.js';
 import styles from './reports-page.module.css';
 
-const TABS = ['Staff Management', 'Revenue Report', 'Staff Report'];
-const STATUS_TABS = ['Confirmed', 'Avoided', 'Cancelled'];
+const TABS = ['Reservation Report', 'Revenue Report', 'Staff Report'];
+const STATUS_TABS = ['All', 'Confirmed', 'Awaited', 'Cancelled', 'Failed', 'Fulfilled'];
 const COLORS = ['#f5a623', '#ffd9a0', '#c47f12', '#8a5a0c', '#d9952a'];
 
 type ReportData = { summary: ReservationSummary; reservations: Reservation[] };
 
-/** Reports page with a donut chart of reservations and a reservation table. */
+/** Reports page with a donut chart of reservations and a filterable reservation table. */
 export function ReportsPage() {
   const { data } = useApi<ReportData>('reports/reservations', {
     summary: mockReservationSummary,
     reservations: mockReservations,
   });
   const [tab, setTab] = useState(0);
-  const [statusTab, setStatusTab] = useState(0);
+  const [statusTab, setStatusTab] = useState('All');
+
+  const shown = statusTab === 'All'
+    ? data.reservations
+    : data.reservations.filter((r) => r.status === statusTab);
 
   return (
     <>
@@ -45,7 +49,9 @@ export function ReportsPage() {
             <div className={styles.legend}>
               {data.summary.breakdown.map((b, i) => (
                 <div key={b.label} className={styles.legendItem}>
-                  <span className={styles.legendDot} style={{ background: COLORS[i % COLORS.length] }} />{b.label}
+                  <span className={styles.legendDot} style={{ background: COLORS[i % COLORS.length] }} />
+                  <span className={styles.legendLabel}>{b.label}</span>
+                  <span className={styles.legendValue}>{b.value}</span>
                 </div>
               ))}
             </div>
@@ -53,24 +59,36 @@ export function ReportsPage() {
         </div>
 
         <div className={styles.statusCard}>
+          <h2 className={styles.cardTitle}>Filter by Status</h2>
           <div className={styles.statusTabs}>
-            {STATUS_TABS.map((t, i) => (
-              <button key={t} className={`${styles.statusTab} ${statusTab === i ? styles.statusActive : ''}`} onClick={() => setStatusTab(i)}>{t}</button>
+            {STATUS_TABS.map((t) => (
+              <button key={t} className={`${styles.statusTab} ${statusTab === t ? styles.statusActive : ''}`} onClick={() => setStatusTab(t)}>{t}</button>
             ))}
+          </div>
+          <div className={styles.statusSummary}>
+            <span className={styles.statusCount}>{shown.length}</span>
+            <span className={styles.statusCountLabel}>{statusTab === 'All' ? 'total reservations' : `${statusTab.toLowerCase()} reservations`}</span>
           </div>
         </div>
       </div>
 
+      <div className={styles.tableHead}>
+        <span>Reservation ID</span><span>Customer Name</span><span>Phone Number</span>
+        <span>Reservation Date</span><span>Check In</span><span>Check Out</span><span>Status</span><span>Total</span>
+      </div>
       <div className={styles.tableWrap}>
-        {data.reservations.map((r) => (
+        {shown.length === 0 ? (
+          <div className={styles.empty}>No {statusTab.toLowerCase()} reservations.</div>
+        ) : shown.map((r) => (
           <div key={r.id} className={styles.row}>
-            <Cell label="Reservation ID" value={r.email} />
-            <Cell label="Customer Name" value={r.customer} />
-            <Cell label="Phone Number" value={r.phone} />
-            <Cell label="Reservation Date" value={r.date} />
-            <Cell label="Check In" value={r.checkIn} />
-            <Cell label="Check Out" value={r.checkOut} />
-            <Cell label="Total" value={`$${r.total.toFixed(2)}`} />
+            <span className={styles.email}>{r.email}</span>
+            <span>{r.customer}</span>
+            <span>{r.phone}</span>
+            <span>{r.date}</span>
+            <span>{r.checkIn}</span>
+            <span>{r.checkOut}</span>
+            <span><span className={`${styles.statusPill} ${styles[`s_${r.status}`] || ''}`}>{r.status}</span></span>
+            <span className={styles.totalCell}>${r.total.toFixed(2)}</span>
           </div>
         ))}
       </div>
@@ -78,18 +96,9 @@ export function ReportsPage() {
   );
 }
 
-function Cell({ label, value }: { label: string; value: string }) {
-  return (
-    <div className={styles.cell}>
-      <div className={styles.cellLabel}>{label}</div>
-      <div className={styles.cellValue}>{value}</div>
-    </div>
-  );
-}
-
 /** SVG donut chart for the reservation breakdown. */
 function Donut({ breakdown, total }: { breakdown: { label: string; value: number }[]; total: number }) {
-  const sum = breakdown.reduce((a, b) => a + b.value, 0);
+  const sum = breakdown.reduce((a, b) => a + b.value, 0) || 1;
   const radius = 70;
   const circ = 2 * Math.PI * radius;
   let offset = 0;

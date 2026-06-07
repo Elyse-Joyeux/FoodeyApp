@@ -1,14 +1,14 @@
 {
+{
   "version": "0.2.0",
   "configurations": [
     {
       "type": "pwa-node",
       "request": "launch",
       "name": "Launch Foodey Service",
-      "program": "${workspaceFolder}/backend/main.ts",
+      "program": "${workspaceFolder}/backend/main.js",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["--loader", "tsx"],
       "console": "integratedTerminal",
       "skipFiles": ["<node_internals>/**"]
     }

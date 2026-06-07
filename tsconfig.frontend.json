@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    "types": ["vite/client", "node"]
+  },
+  "include": ["frontend/**/*"],
+  "exclude": ["node_modules", "frontend/dist"]
+}

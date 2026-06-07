@@ -15,16 +15,31 @@
 .donutNum { fill: var(--foodey-text); font-size: 22px; font-weight: 700; }
 .legend { display: flex; flex-direction: column; gap: 14px; }
 .legendItem { display: flex; align-items: center; gap: 10px; color: var(--foodey-text-dim); }
-.legendDot { width: 16px; height: 6px; border-radius: 3px; }
+.legendDot { width: 16px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.legendLabel { flex: 1; }
+.legendValue { color: var(--foodey-text); font-weight: 700; }
 
-.statusTabs { display: flex; gap: 10px; }
-.statusTab { background: none; border: none; color: var(--foodey-text); padding: 12px 26px; border-radius: 10px; cursor: pointer; }
-.statusActive { background: var(--foodey-orange); color: #1a1a1a; font-weight: 600; }
+.statusTabs { display: flex; gap: 10px; flex-wrap: wrap; }
+.statusTab { background: var(--foodey-card-2); border: 1px solid var(--foodey-border); color: var(--foodey-text); padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: .9rem; }
+.statusActive { background: var(--foodey-orange); color: #1a1a1a; font-weight: 600; border-color: var(--foodey-orange); }
+.statusSummary { display: flex; align-items: baseline; gap: 12px; margin-top: 24px; }
+.statusCount { font-size: 2.6rem; font-weight: 800; color: var(--foodey-orange); }
+.statusCountLabel { color: var(--foodey-text-dim); }
 
+.tableHead { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; padding: 0 22px 12px; color: var(--foodey-orange); font-size: .82rem; }
 .tableWrap { display: flex; flex-direction: column; gap: 4px; }
-.row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 16px; background: var(--foodey-card); border-radius: var(--foodey-radius); padding: 18px 22px; }
+.row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; background: var(--foodey-card); border-radius: var(--foodey-radius); padding: 18px 22px; font-size: .88rem; align-items: center; }
 .row:nth-child(even) { background: var(--foodey-card-2); }
-.cellLabel { color: var(--foodey-orange); font-size: .82rem; margin-bottom: 6px; }
-.cellValue { font-size: .9rem; }
+.email { color: var(--foodey-text-dim); }
+.totalCell { font-weight: 700; }
+.empty { background: var(--foodey-card); border: 1px dashed var(--foodey-border); border-radius: var(--foodey-radius-lg); padding: 50px; text-align: center; color: var(--foodey-text-dim); }
 
-@media (max-width: 1100px) { .cards { grid-template-columns: 1fr; } .row { grid-template-columns: 1fr 1fr 1fr; } }
+.statusPill { padding: 4px 12px; border-radius: 8px; font-size: .78rem; }
+.s_Confirmed { background: #16331f; color: var(--foodey-green); }
+.s_Awaited { background: #3a2e10; color: var(--foodey-orange); }
+.s_Cancelled { background: #3a1414; color: var(--foodey-red); }
+.s_Failed { background: #2a2a2a; color: #aaa; }
+.s_Fulfilled { background: #102a3a; color: #38bdf8; }
+.s_Avoided { background: #2a1430; color: #c084fc; }
+
+@media (max-width: 1100px) { .cards { grid-template-columns: 1fr; } .tableHead { display: none; } .row { grid-template-columns: 1fr 1fr; } }

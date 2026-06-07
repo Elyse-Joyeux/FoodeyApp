@@ -9,13 +9,15 @@
     "dev:frontend": "cd frontend && vite --host 127.0.0.1",
     "build:frontend": "cd frontend && vite build",
     "preview:frontend": "cd frontend && vite preview",
-    "dev:backend": "tsx backend/main.ts",
-    "start:backend": "node --loader tsx backend/main.ts",
-    "typecheck": "tsc --noEmit"
+    "dev:backend": "node --watch backend/main.js",
+    "start:backend": "node backend/main.js",
+    "typecheck": "tsc -p tsconfig.frontend.json --noEmit"
   },
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "mongoose": "^8.9.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.16.0"
