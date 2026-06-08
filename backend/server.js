@@ -1,4 +1,5 @@
 import cors from 'cors';
+import crypto from 'node:crypto';
 import express from 'express';
 import mongoose from 'mongoose';
 import {
@@ -10,6 +11,7 @@ import {
   NotificationModel,
   OrderModel,
   ReservationModel,
+  Session,
   Staff,
   User,
 } from './models.js';
@@ -45,6 +47,16 @@ function list(docs) {
   return docs.map(out);
 }
 
+function publicUser(doc) {
+  if (!doc) {
+    return null;
+  }
+
+  const user = out(doc);
+  delete user.password;
+  return user;
+}
+
 let nextId = Date.now();
 function uid(prefix = '') {
   nextId += 1;
@@ -55,6 +67,66 @@ function asyncRoute(handler) {
   return (req, res, next) => {
     Promise.resolve(handler(req, res, next)).catch(next);
   };
+}
+
+function parseCookies(req) {
+  return Object.fromEntries(
+    (req.headers.cookie || '')
+      .split(';')
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => {
+        const index = part.indexOf('=');
+        if (index === -1) {
+          return [part, ''];
+        }
+        return [part.slice(0, index), decodeURIComponent(part.slice(index + 1))];
+      }),
+  );
+}
+
+function setSessionCookie(res, sessionId, expiresAt) {
+  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
+  res.setHeader(
+    'Set-Cookie',
+    `foodey_session=${encodeURIComponent(sessionId)}; HttpOnly; SameSite=Lax; Path=/; Expires=${expiresAt.toUTCString()}${secure}`,
+  );
+}
+
+function clearSessionCookie(res) {
+  res.setHeader(
+    'Set-Cookie',
+    'foodey_session=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0',
+  );
+}
+
+async function createSession(res, userId) {
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+  const session = await Session.create({
+    _id: crypto.randomUUID(),
+    userId,
+    expiresAt,
+  });
+
+  setSessionCookie(res, session.id, expiresAt);
+  return session;
+}
+
+async function currentUser(req) {
+  const sessionId = parseCookies(req).foodey_session;
+  if (!sessionId) {
+    return null;
+  }
+
+  const session = await Session.findById(sessionId);
+  if (!session || session.expiresAt <= new Date()) {
+    if (session) {
+      await Session.findByIdAndDelete(sessionId);
+    }
+    return null;
+  }
+
+  return User.findById(session.userId);
 }
 
 async function connectMongo() {
@@ -102,7 +174,7 @@ export function run() {
     // Check if user already exists
     const existing = await User.findOne({ email });
     if (existing) {
-      return res.status(409).json({ error: 'Email already registered' });
+      return res.status(409).json({ error: 'User already exists' });
     }
 
     // Create new user
@@ -114,7 +186,8 @@ export function run() {
       restaurantName,
     });
 
-    return res.status(201).json(out(user));
+    await createSession(res, user.id);
+    return res.status(201).json(publicUser(user));
   }));
 
   apiRouter.post('/auth/login', asyncRoute(async (req, res) => {
@@ -133,11 +206,22 @@ export function run() {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    return res.json(out(user));
+    await createSession(res, user.id);
+    return res.json(publicUser(user));
   }));
 
   apiRouter.get('/auth/me', asyncRoute(async (req, res) => {
-    res.json(null);
+    res.json(publicUser(await currentUser(req)));
+  }));
+
+  apiRouter.post('/auth/logout', asyncRoute(async (req, res) => {
+    const sessionId = parseCookies(req).foodey_session;
+    if (sessionId) {
+      await Session.findByIdAndDelete(sessionId);
+    }
+
+    clearSessionCookie(res);
+    res.json({ ok: true });
   }));
 
   // ----- MongoDB Connection check middleware -----

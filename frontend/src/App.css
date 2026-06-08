@@ -1,4 +1,4 @@
-:global(:root) {
+:root {
   --foodey-orange: #f5a623;
   --foodey-orange-bright: #ffa726;
   --foodey-orange-soft: #ffd9a0;
@@ -19,7 +19,7 @@
   --foodey-font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-:global(body) {
+body {
   margin: 0;
   font-family: var(--foodey-font);
   background: var(--foodey-bg);
@@ -27,6 +27,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-:global(*) {
+* {
   box-sizing: border-box;
 }

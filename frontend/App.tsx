@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import './src/theme/theme.module.css';
+import './src/App.css';
 import { DashboardLayout } from './src/components/dashboard-layout.js';
 import { HomePage } from './src/pages/home-page.js';
 import { LoginPage } from './src/pages/login-page.js';

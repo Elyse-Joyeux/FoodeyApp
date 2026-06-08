@@ -108,12 +108,22 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 }, schemaOptions);
 
+const sessionSchema = new mongoose.Schema({
+  _id: String,
+  userId: { type: String, ref: 'User', required: true },
+  createdAt: { type: Date, default: Date.now },
+  expiresAt: { type: Date, required: true },
+}, schemaOptions);
+
+sessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
 function model(name, schema) {
   return mongoose.models[name] || mongoose.model(name, schema);
 }
 
 export const Staff = model('Staff', staffSchema);
 export const User = model('User', userSchema);
+export const Session = model('Session', sessionSchema);
 export const Attendance = model('Attendance', attendanceSchema);
 export const Menu = model('Menu', menuSchema);
 export const Category = model('Category', categorySchema);

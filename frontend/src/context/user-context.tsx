@@ -26,13 +26,35 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load user from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('foodey_user');
-    if (stored) {
-      setUser(JSON.parse(stored));
-    }
-    setIsLoading(false);
+    let active = true;
+
+    fetch(`${BASE}/auth/me`, { credentials: 'include' })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (active && data) {
+          setUser({
+            id: data.id,
+            fullName: data.fullName,
+            email: data.email,
+            restaurantName: data.restaurantName,
+          });
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setUser(null);
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   const login = async (email: string, password: string): Promise<User | null> => {
@@ -58,11 +80,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
       };
 
       setUser(userData);
-      localStorage.setItem('foodey_user', JSON.stringify(userData));
       return userData;
     } catch (error) {
       console.error('Login error:', error);
-      return null;
+      throw error;
     }
   };
 
@@ -89,17 +110,19 @@ export function UserProvider({ children }: { children: ReactNode }) {
       };
 
       setUser(userData);
-      localStorage.setItem('foodey_user', JSON.stringify(userData));
       return userData;
     } catch (error) {
       console.error('Signup error:', error);
-      return null;
+      throw error;
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('foodey_user');
+    fetch(`${BASE}/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    }).catch(() => undefined);
   };
 
   return (

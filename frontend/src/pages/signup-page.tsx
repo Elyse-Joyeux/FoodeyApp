@@ -10,6 +10,7 @@ export function SignupPage() {
   const navigate = useNavigate();
   const { signup } = useUser();
   const [show, setShow] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -59,8 +60,6 @@ export function SignupPage() {
       const user = await signup(formData.fullName, formData.email, formData.password, formData.restaurantName);
       if (user) {
         navigate('/dashboard');
-      } else {
-        setError('Signup failed. Please try again.');
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -137,13 +136,14 @@ export function SignupPage() {
         <div className={card.inputWrap}>
           <LockIcon size={20} />
           <input
-            type="password"
+            type={showConfirm ? 'text' : 'password'}
             name="confirmPassword"
             placeholder="Confirm your password"
             value={formData.confirmPassword}
             onChange={handleChange}
             disabled={loading}
           />
+          <button type="button" className={card.eye} onClick={() => setShowConfirm((s) => !s)}><EyeOffIcon size={20} /></button>
         </div>
 
         <label className={card.terms}>
