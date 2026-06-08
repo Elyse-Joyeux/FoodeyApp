@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-const GATEWAY = (typeof process !== 'undefined' && process.env && process.env.BACKEND_URL)
-  ? process.env.BACKEND_URL
-  : '';
+const GATEWAY = import.meta.env.VITE_BACKEND_URL || '';
 const BASE = `${GATEWAY}/foodey-service/api`;
 
 export type User = {

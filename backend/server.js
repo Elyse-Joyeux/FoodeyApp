@@ -86,17 +86,20 @@ function parseCookies(req) {
 }
 
 function setSessionCookie(res, sessionId, expiresAt) {
+  const sameSite = process.env.NODE_ENV === 'production' ? 'None' : 'Lax';
   const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
   res.setHeader(
     'Set-Cookie',
-    `foodey_session=${encodeURIComponent(sessionId)}; HttpOnly; SameSite=Lax; Path=/; Expires=${expiresAt.toUTCString()}${secure}`,
+    `foodey_session=${encodeURIComponent(sessionId)}; HttpOnly; SameSite=${sameSite}; Path=/; Expires=${expiresAt.toUTCString()}${secure}`,
   );
 }
 
 function clearSessionCookie(res) {
+  const sameSite = process.env.NODE_ENV === 'production' ? 'None' : 'Lax';
+  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
   res.setHeader(
     'Set-Cookie',
-    'foodey_session=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0',
+    `foodey_session=; HttpOnly; SameSite=${sameSite}; Path=/; Max-Age=0${secure}`,
   );
 }
 
