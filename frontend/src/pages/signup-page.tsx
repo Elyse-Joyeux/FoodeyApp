@@ -5,6 +5,16 @@ import { MailIcon, LockIcon, EyeOffIcon, BackIcon } from '../components/icons.js
 import { useUser } from '../context/user-context.js';
 import card from '../components/auth-card.module.css';
 
+const routeForUser = (user: Awaited<ReturnType<ReturnType<typeof useUser>['signup']>>) => {
+  if (!user) return '/login';
+  if (user.permissions.Dashboard) return '/dashboard';
+  if (user.permissions.Inventory) return '/inventory';
+  if (user.permissions.Orders) return '/orders';
+  if (user.permissions.Reports) return '/reports';
+  if (user.permissions.Settings) return '/profile';
+  return '/profile';
+};
+
 /** Registration screen for new restaurant accounts. */
 export function SignupPage() {
   const navigate = useNavigate();
@@ -95,7 +105,7 @@ export function SignupPage() {
         chefEmail: formData.chefEmail,
       });
       if (user) {
-        navigate('/dashboard');
+        navigate(routeForUser(user));
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');

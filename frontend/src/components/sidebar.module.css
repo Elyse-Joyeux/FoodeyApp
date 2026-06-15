@@ -1,7 +1,7 @@
 .sidebar {
   width: var(--foodey-sidebar-width);
   min-width: var(--foodey-sidebar-width);
-  background: linear-gradient(180deg, rgba(24,19,13,.98) 0%, rgba(9,8,6,.98) 100%);
+  background: linear-gradient(180deg, rgba(8,13,24,.98) 0%, rgba(3,6,13,.98) 100%);
   border-right: 1px solid var(--foodey-border);
   box-shadow: 18px 0 60px rgba(0,0,0,.28);
   display: flex;

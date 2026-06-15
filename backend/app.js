@@ -309,6 +309,41 @@ async function sendOtpEmail({ to, code }) {
   });
 }
 
+async function sendWelcomeEmail({ to, name, restaurantName }) {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
+  const subject = `Welcome to Foodey, ${name}`;
+  const text = `Welcome to Foodey. Your restaurant workspace "${restaurantName}" is ready. You can now manage staff, orders, inventory, reports, reservations, and access from your dashboard.`;
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+    console.log(`Welcome email for ${to}: ${text}`);
+    return;
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: Number(SMTP_PORT),
+    secure: Number(SMTP_PORT) === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  });
+
+  await transporter.sendMail({
+    from: SMTP_FROM || SMTP_USER,
+    to,
+    subject,
+    text,
+    html: `
+      <div style="font-family:Arial,sans-serif;background:#070a12;color:#f8fafc;padding:28px">
+        <div style="max-width:560px;margin:auto;background:#111827;border:1px solid #263244;border-radius:18px;padding:28px">
+          <h1 style="color:#f59e0b;margin-top:0">Welcome to Foodey</h1>
+          <p>Hi ${name},</p>
+          <p>Your restaurant workspace <strong>${restaurantName}</strong> is ready.</p>
+          <p>You can now manage staff, orders, inventory, reports, reservations, and team access from your dashboard.</p>
+          <p style="color:#94a3b8">Thanks for choosing Foodey.</p>
+        </div>
+      </div>
+    `,
+  });
+}
+
 function csvCell(value) {
   return `"${String(value ?? '').replace(/"/g, '""')}"`;
 }
@@ -464,6 +499,8 @@ export function run() {
     });
   });
 
+  apiRouter.use(requireMongo);
+
   apiRouter.use((req, res, next) => {
     if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
       return writeLimiter(req, res, next);
@@ -545,6 +582,7 @@ export function run() {
     ].filter(Boolean);
     if (staffToCreate.length) await Staff.insertMany(staffToCreate);
     await createSession(res, user.id);
+    await sendWelcomeEmail({ to: user.email, name: user.fullName, restaurantName: user.restaurantName });
     res.status(201).json(await publicUser(user));
   }));
 
@@ -649,7 +687,7 @@ export function run() {
     res.json({ ok: true });
   }));
 
-  apiRouter.use(requireMongo, asyncRoute(requireAuth));
+  apiRouter.use(asyncRoute(requireAuth));
 
   apiRouter.put('/profile', validate({
     fullName: {},
