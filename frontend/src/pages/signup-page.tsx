@@ -133,29 +133,29 @@ export function SignupPage() {
 
         {step === 0 && (
           <>
-            <label className={card.label}>Full Name</label>
+            <label className={card.label} htmlFor="signup-full-name">Full Name</label>
             <div className={card.inputWrap}>
-              <input type="text" name="fullName" placeholder="Enter your full name" value={formData.fullName} onChange={handleChange} disabled={loading} />
+              <input id="signup-full-name" type="text" name="fullName" autoComplete="name" placeholder="Enter your full name" value={formData.fullName} onChange={handleChange} disabled={loading} />
             </div>
 
-            <label className={card.label}>Email</label>
+            <label className={card.label} htmlFor="signup-email">Email</label>
             <div className={card.inputWrap}>
               <MailIcon size={20} />
-              <input type="email" name="email" placeholder="Enter your email address" value={formData.email} onChange={handleChange} disabled={loading} />
+              <input id="signup-email" type="email" name="email" autoComplete="email" placeholder="Enter your email address" value={formData.email} onChange={handleChange} disabled={loading} />
             </div>
           </>
         )}
 
         {step === 1 && (
           <>
-            <label className={card.label}>Restaurant Name</label>
+            <label className={card.label} htmlFor="signup-restaurant-name">Restaurant Name</label>
             <div className={card.inputWrap}>
-              <input type="text" name="restaurantName" placeholder="Enter your restaurant name" value={formData.restaurantName} onChange={handleChange} disabled={loading} />
+              <input id="signup-restaurant-name" type="text" name="restaurantName" autoComplete="organization" placeholder="Enter your restaurant name" value={formData.restaurantName} onChange={handleChange} disabled={loading} />
             </div>
 
-            <label className={card.label}>Restaurant Type</label>
+            <label className={card.label} htmlFor="signup-restaurant-type">Restaurant Type</label>
             <div className={card.inputWrap}>
-              <select name="restaurantType" value={formData.restaurantType} onChange={handleChange} disabled={loading}>
+              <select id="signup-restaurant-type" name="restaurantType" autoComplete="off" value={formData.restaurantType} onChange={handleChange} disabled={loading}>
                 <option>Casual Dining</option>
                 <option>Fine Dining</option>
                 <option>Cafe and Bakery</option>
@@ -166,18 +166,18 @@ export function SignupPage() {
 
             <div className={card.twoCols}>
               <div>
-                <label className={card.label}>Employees</label>
-                <div className={card.inputWrap}><input type="number" min="1" name="employeeCount" value={formData.employeeCount} onChange={handleChange} disabled={loading} /></div>
+                <label className={card.label} htmlFor="signup-employee-count">Employees</label>
+                <div className={card.inputWrap}><input id="signup-employee-count" type="number" min="1" name="employeeCount" autoComplete="off" value={formData.employeeCount} onChange={handleChange} disabled={loading} /></div>
               </div>
               <div>
-                <label className={card.label}>Chefs</label>
-                <div className={card.inputWrap}><input type="number" min="1" name="chefCount" value={formData.chefCount} onChange={handleChange} disabled={loading} /></div>
+                <label className={card.label} htmlFor="signup-chef-count">Chefs</label>
+                <div className={card.inputWrap}><input id="signup-chef-count" type="number" min="1" name="chefCount" autoComplete="off" value={formData.chefCount} onChange={handleChange} disabled={loading} /></div>
               </div>
             </div>
 
-            <label className={card.label}>Service Style</label>
+            <label className={card.label} htmlFor="signup-service-style">Service Style</label>
             <div className={card.inputWrap}>
-              <select name="serviceStyle" value={formData.serviceStyle} onChange={handleChange} disabled={loading}>
+              <select id="signup-service-style" name="serviceStyle" autoComplete="off" value={formData.serviceStyle} onChange={handleChange} disabled={loading}>
                 <option>Dine-in and delivery</option>
                 <option>Dine-in only</option>
                 <option>Delivery first</option>
@@ -188,22 +188,22 @@ export function SignupPage() {
             <p className={card.sectionNote}>Optional team setup</p>
             <div className={card.twoCols}>
               <div>
-                <label className={card.label}>Manager Name</label>
-                <div className={card.inputWrap}><input name="managerName" placeholder="e.g. Aline Uwase" value={formData.managerName} onChange={handleChange} disabled={loading} /></div>
+                <label className={card.label} htmlFor="signup-manager-name">Manager Name</label>
+                <div className={card.inputWrap}><input id="signup-manager-name" name="managerName" autoComplete="off" placeholder="e.g. Aline Uwase" value={formData.managerName} onChange={handleChange} disabled={loading} /></div>
               </div>
               <div>
-                <label className={card.label}>Manager Email</label>
-                <div className={card.inputWrap}><input type="email" name="managerEmail" placeholder="manager@restaurant.com" value={formData.managerEmail} onChange={handleChange} disabled={loading} /></div>
+                <label className={card.label} htmlFor="signup-manager-email">Manager Email</label>
+                <div className={card.inputWrap}><input id="signup-manager-email" type="email" name="managerEmail" autoComplete="off" placeholder="manager@restaurant.com" value={formData.managerEmail} onChange={handleChange} disabled={loading} /></div>
               </div>
             </div>
             <div className={card.twoCols}>
               <div>
-                <label className={card.label}>Head Chef Name</label>
-                <div className={card.inputWrap}><input name="chefName" placeholder="e.g. Claude Ndayisaba" value={formData.chefName} onChange={handleChange} disabled={loading} /></div>
+                <label className={card.label} htmlFor="signup-chef-name">Head Chef Name</label>
+                <div className={card.inputWrap}><input id="signup-chef-name" name="chefName" autoComplete="off" placeholder="e.g. Claude Ndayisaba" value={formData.chefName} onChange={handleChange} disabled={loading} /></div>
               </div>
               <div>
-                <label className={card.label}>Chef Email</label>
-                <div className={card.inputWrap}><input type="email" name="chefEmail" placeholder="chef@restaurant.com" value={formData.chefEmail} onChange={handleChange} disabled={loading} /></div>
+                <label className={card.label} htmlFor="signup-chef-email">Chef Email</label>
+                <div className={card.inputWrap}><input id="signup-chef-email" type="email" name="chefEmail" autoComplete="off" placeholder="chef@restaurant.com" value={formData.chefEmail} onChange={handleChange} disabled={loading} /></div>
               </div>
             </div>
           </>
@@ -211,25 +211,25 @@ export function SignupPage() {
 
         {step === 2 && (
           <>
-            <label className={card.label}>Password</label>
+            <label className={card.label} htmlFor="signup-password">Password</label>
             <div className={card.inputWrap}>
               <LockIcon size={20} />
-              <input type={show ? 'text' : 'password'} name="password" placeholder="Enter your password" value={formData.password} onChange={handleChange} disabled={loading} />
+              <input id="signup-password" type={show ? 'text' : 'password'} name="password" autoComplete="new-password" placeholder="Enter your password" value={formData.password} onChange={handleChange} disabled={loading} />
               <button type="button" className={card.eye} onClick={() => setShow((s) => !s)}><EyeOffIcon size={20} /></button>
             </div>
             <div className={card.passwordRules}>
               {passwordChecks.map((rule) => <span key={rule.label} className={rule.ok ? card.ruleOk : card.rule}>{rule.label}</span>)}
             </div>
 
-            <label className={card.label}>Confirm Password</label>
+            <label className={card.label} htmlFor="signup-confirm-password">Confirm Password</label>
             <div className={card.inputWrap}>
               <LockIcon size={20} />
-              <input type={showConfirm ? 'text' : 'password'} name="confirmPassword" placeholder="Confirm your password" value={formData.confirmPassword} onChange={handleChange} disabled={loading} />
+              <input id="signup-confirm-password" type={showConfirm ? 'text' : 'password'} name="confirmPassword" autoComplete="new-password" placeholder="Confirm your password" value={formData.confirmPassword} onChange={handleChange} disabled={loading} />
               <button type="button" className={card.eye} onClick={() => setShowConfirm((s) => !s)}><EyeOffIcon size={20} /></button>
             </div>
 
             <label className={card.terms}>
-              <input type="checkbox" name="agreeTerms" checked={formData.agreeTerms} onChange={handleChange} disabled={loading} /> I agree to the <span className={card.link}>Terms &amp; Conditions</span>
+              <input id="signup-agree-terms" type="checkbox" name="agreeTerms" autoComplete="off" checked={formData.agreeTerms} onChange={handleChange} disabled={loading} /> I agree to the <span className={card.link}>Terms &amp; Conditions</span>
             </label>
           </>
         )}

@@ -263,9 +263,22 @@ function hashToken(token) {
   return crypto.createHash('sha256').update(token).digest('hex');
 }
 
+function hasEmailProvider() {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
+  return Boolean(
+    SMTP_HOST
+    && SMTP_PORT
+    && SMTP_USER
+    && SMTP_PASS
+    && SMTP_HOST !== 'smtp.example.com'
+    && SMTP_USER !== 'mailer@example.com'
+    && SMTP_PASS !== 'change-me',
+  );
+}
+
 async function sendResetEmail({ to, link }) {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+  if (!hasEmailProvider()) {
     console.log(`Password reset link for ${to}: ${link}`);
     return;
   }
@@ -288,7 +301,7 @@ async function sendResetEmail({ to, link }) {
 
 async function sendOtpEmail({ to, code }) {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+  if (!hasEmailProvider()) {
     console.log(`Foodey OTP for ${to}: ${code}`);
     return;
   }
@@ -314,7 +327,7 @@ async function sendWelcomeEmail({ to, name, restaurantName }) {
   const appUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
   const subject = `Welcome to Foodey, ${name}`;
   const text = `Welcome to Foodey. Your restaurant workspace "${restaurantName}" is ready. Sign in here: ${appUrl}/login`;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+  if (!hasEmailProvider()) {
     console.log(`Welcome email fallback for ${to}: ${text}`);
     return;
   }

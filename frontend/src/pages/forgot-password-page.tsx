@@ -67,24 +67,24 @@ export function ForgotPasswordPage() {
 
         {token ? (
           <>
-            <label className={card.label}>New Password</label>
+            <label className={card.label} htmlFor="reset-password">New Password</label>
             <div className={card.inputWrap}>
               <LockIcon size={20} />
-              <input type="password" placeholder="Enter new password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={8} required />
+              <input id="reset-password" name="password" type="password" autoComplete="new-password" placeholder="Enter new password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={8} required />
             </div>
 
-            <label className={card.label}>Confirm Password</label>
+            <label className={card.label} htmlFor="reset-confirm-password">Confirm Password</label>
             <div className={card.inputWrap}>
               <LockIcon size={20} />
-              <input type="password" placeholder="Confirm new password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={8} required />
+              <input id="reset-confirm-password" name="confirmPassword" type="password" autoComplete="new-password" placeholder="Confirm new password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={8} required />
             </div>
           </>
         ) : (
           <>
-            <label className={card.label}>Email</label>
+            <label className={card.label} htmlFor="forgot-email">Email</label>
             <div className={card.inputWrap}>
               <MailIcon size={20} />
-              <input type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <input id="forgot-email" name="email" type="email" autoComplete="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
           </>
         )}

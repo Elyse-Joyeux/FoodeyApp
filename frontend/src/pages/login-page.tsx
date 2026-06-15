@@ -104,12 +104,14 @@ export function LoginPage() {
         {error && <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px' }}>{error}</div>}
         {message && <div style={{ color: 'var(--foodey-orange)', marginBottom: '10px', fontSize: '14px' }}>{message}</div>}
 
-        <label className={card.label}>Email</label>
+        <label className={card.label} htmlFor="login-email">Email</label>
         <div className={card.inputWrap}>
           <UserIcon size={20} />
           <input
+            id="login-email"
             type="email"
             name="email"
+            autoComplete="email"
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
@@ -119,11 +121,13 @@ export function LoginPage() {
 
         {otpMode ? (
           <>
-            <label className={card.label}>OTP Code</label>
+            <label className={card.label} htmlFor="login-otp">OTP Code</label>
             <div className={card.inputWrap}>
               <ShieldIcon size={20} />
               <input
+                id="login-otp"
                 name="otp"
+                autoComplete="one-time-code"
                 placeholder={otpSent ? 'Enter the 6-digit code' : 'Request a code first'}
                 value={formData.otp}
                 onChange={handleChange}
@@ -134,12 +138,14 @@ export function LoginPage() {
           </>
         ) : (
           <>
-            <label className={card.label}>Password</label>
+            <label className={card.label} htmlFor="login-password">Password</label>
             <div className={card.inputWrap}>
               <LockIcon size={20} />
               <input
+                id="login-password"
                 type={show ? 'text' : 'password'}
                 name="password"
+                autoComplete="current-password"
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
@@ -151,7 +157,7 @@ export function LoginPage() {
         )}
 
         <div className={card.row}>
-          <label className={card.remember}><input type="checkbox" /> Remember me</label>
+          <label className={card.remember} htmlFor="remember-login"><input id="remember-login" name="remember" type="checkbox" autoComplete="off" /> Remember me</label>
           <Link to="/forgot-password" className={card.link}>Forgot Password?</Link>
         </div>
 

@@ -120,15 +120,15 @@ function MyProfile() {
         </div>
       </div>
 
-      <Field label="Full Name" value={profile.name} onChange={set("name")} />
-      <Field label="Email" value={profile.email} onChange={set("email")} />
-      <Field label="Restaurant Name" value={profile.restaurantName} onChange={set("restaurantName")} />
+      <Field id="profile-name" name="fullName" autoComplete="name" label="Full Name" value={profile.name} onChange={set("name")} />
+      <Field id="profile-email" name="email" autoComplete="email" label="Email" value={profile.email} onChange={set("email")} />
+      <Field id="profile-restaurant" name="restaurantName" autoComplete="organization" label="Restaurant Name" value={profile.restaurantName} onChange={set("restaurantName")} />
       <div className={styles.avatarPanel}>
         <div className={styles.avatarPanelHead}>
           <span>Choose profile avatar</span>
           <label className={styles.uploadBtn}>
             Upload image
-            <input type="file" accept="image/*" onChange={(e) => uploadAvatar(e.target.files?.[0])} />
+            <input id="profile-avatar-upload" name="avatarUpload" type="file" accept="image/*" onChange={(e) => uploadAvatar(e.target.files?.[0])} />
           </label>
         </div>
         <div className={styles.avatarChoices}>
@@ -146,17 +146,26 @@ function MyProfile() {
       </div>
       <Field
         label="Address"
+          id="profile-address"
+          name="address"
+          autoComplete="street-address"
         value={profile.address}
         onChange={set("address")}
       />
       <div className={styles.twoCol}>
         <PassField
           label="Password"
+          id="profile-password"
+          name="password"
+          autoComplete="new-password"
           value={profile.password}
           onChange={set("password")}
         />
         <PassField
           label="Confirm Password"
+          id="profile-confirm-password"
+          name="confirmPassword"
+          autoComplete="new-password"
           value={profile.confirm}
           onChange={set("confirm")}
         />
@@ -306,8 +315,11 @@ function ManageAccess() {
         </div>
         <div className={styles.addGrid}>
           <div className={styles.addField}>
-            <label className={styles.addLabel}>Full Name</label>
+            <label className={styles.addLabel} htmlFor="access-name">Full Name</label>
             <input
+              id="access-name"
+              name="name"
+              autoComplete="name"
               className={styles.addInput}
               placeholder="e.g. John Doe"
               value={draft.name}
@@ -315,8 +327,12 @@ function ManageAccess() {
             />
           </div>
           <div className={styles.addField}>
-            <label className={styles.addLabel}>Email</label>
+            <label className={styles.addLabel} htmlFor="access-email">Email</label>
             <input
+              id="access-email"
+              name="email"
+              type="email"
+              autoComplete="email"
               className={styles.addInput}
               placeholder="e.g. john@foodey.com"
               value={draft.email}
@@ -324,8 +340,11 @@ function ManageAccess() {
             />
           </div>
           <div className={styles.addField}>
-            <label className={styles.addLabel}>Role</label>
+            <label className={styles.addLabel} htmlFor="access-role">Role</label>
             <select
+              id="access-role"
+              name="role"
+              autoComplete="off"
               className={styles.addInput}
               value={draft.role}
               onChange={(e) => setDraft({ ...draft, role: e.target.value })}
@@ -337,9 +356,12 @@ function ManageAccess() {
             </select>
           </div>
           <div className={styles.addField}>
-            <label className={styles.addLabel}>Password</label>
+            <label className={styles.addLabel} htmlFor="access-password">Password</label>
             <div className={styles.passWrap}>
               <input
+                id="access-password"
+                name="password"
+                autoComplete="new-password"
                 className={styles.addInput}
                 type={showPass ? "text" : "password"}
                 placeholder="Set a password"
@@ -403,18 +425,27 @@ function ManageAccess() {
 }
 
 function Field({
+  id,
+  name,
+  autoComplete,
   label,
   value,
   onChange,
 }: {
+  id: string;
+  name: string;
+  autoComplete?: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
 }) {
   return (
     <div className={styles.field}>
-      <label className={styles.fieldLabel}>{label}</label>
+      <label className={styles.fieldLabel} htmlFor={id}>{label}</label>
       <input
+        id={id}
+        name={name}
+        autoComplete={autoComplete}
         className={styles.fieldInput}
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -424,10 +455,16 @@ function Field({
 }
 
 function PassField({
+  id,
+  name,
+  autoComplete,
   label,
   value,
   onChange,
 }: {
+  id: string;
+  name: string;
+  autoComplete?: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
@@ -435,9 +472,12 @@ function PassField({
   const [show, setShow] = useState(false);
   return (
     <div className={styles.field}>
-      <label className={styles.fieldLabel}>{label}</label>
+      <label className={styles.fieldLabel} htmlFor={id}>{label}</label>
       <div className={styles.passInput}>
         <input
+          id={id}
+          name={name}
+          autoComplete={autoComplete}
           type={show ? "text" : "password"}
           value={value}
           placeholder="Enter password"
