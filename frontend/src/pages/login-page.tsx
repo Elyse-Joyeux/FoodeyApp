@@ -8,13 +8,17 @@ import card from '../components/auth-card.module.css';
 /** Login screen with username/password, OTP option and links to sign up / forgot password. */
 export function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useUser();
+  const { login, requestOtp, verifyOtp } = useUser();
   const [show, setShow] = useState(false);
+  const [otpMode, setOtpMode] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
-    email: 'admin@foodey.com',
-    password: 'admin123',
+    email: '',
+    password: '',
+    otp: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +32,46 @@ export function LoginPage() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setMessage('');
 
-    if (!formData.email || !formData.password) {
-      setError('Please enter email and password');
+    if (!formData.email) {
+      setError('Please enter your email');
+      return;
+    }
+
+    if (otpMode) {
+      if (!otpSent) {
+        setLoading(true);
+        try {
+          setMessage(await requestOtp(formData.email));
+          setOtpSent(true);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : 'Could not send OTP');
+        } finally {
+          setLoading(false);
+        }
+        return;
+      }
+
+      if (!formData.otp) {
+        setError('Please enter your OTP code');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const user = await verifyOtp(formData.email, formData.otp);
+        if (user) navigate('/dashboard');
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Invalid OTP code');
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (!formData.password) {
+      setError('Please enter your password');
       return;
     }
 
@@ -61,6 +102,7 @@ export function LoginPage() {
         <p className={card.sub}>Please enter your credentials below to continue</p>
 
         {error && <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px' }}>{error}</div>}
+        {message && <div style={{ color: 'var(--foodey-orange)', marginBottom: '10px', fontSize: '14px' }}>{message}</div>}
 
         <label className={card.label}>Email</label>
         <div className={card.inputWrap}>
@@ -75,19 +117,38 @@ export function LoginPage() {
           />
         </div>
 
-        <label className={card.label}>Password</label>
-        <div className={card.inputWrap}>
-          <LockIcon size={20} />
-          <input
-            type={show ? 'text' : 'password'}
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            disabled={loading}
-          />
-          <button type="button" className={card.eye} onClick={() => setShow((s) => !s)}><EyeOffIcon size={20} /></button>
-        </div>
+        {otpMode ? (
+          <>
+            <label className={card.label}>OTP Code</label>
+            <div className={card.inputWrap}>
+              <ShieldIcon size={20} />
+              <input
+                name="otp"
+                placeholder={otpSent ? 'Enter the 6-digit code' : 'Request a code first'}
+                value={formData.otp}
+                onChange={handleChange}
+                disabled={loading || !otpSent}
+                inputMode="numeric"
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <label className={card.label}>Password</label>
+            <div className={card.inputWrap}>
+              <LockIcon size={20} />
+              <input
+                type={show ? 'text' : 'password'}
+                name="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                disabled={loading}
+              />
+              <button type="button" className={card.eye} onClick={() => setShow((s) => !s)}><EyeOffIcon size={20} /></button>
+            </div>
+          </>
+        )}
 
         <div className={card.row}>
           <label className={card.remember}><input type="checkbox" /> Remember me</label>
@@ -95,12 +156,23 @@ export function LoginPage() {
         </div>
 
         <button type="submit" className={card.primary} disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? 'Please wait...' : otpMode ? (otpSent ? 'Verify OTP' : 'Send OTP') : 'Login'}
         </button>
 
         <div className={card.divider}>Or</div>
 
-        <button type="button" className={card.outline} disabled><ShieldIcon size={20} /> Login with OTP</button>
+        <button
+          type="button"
+          className={card.outline}
+          onClick={() => {
+            setOtpMode((mode) => !mode);
+            setOtpSent(false);
+            setError('');
+            setMessage('');
+          }}
+        >
+          <ShieldIcon size={20} /> {otpMode ? 'Use Password Login' : 'Login with OTP'}
+        </button>
 
         <p className={card.footer}>
           Don't have an account? <Link to="/signup" className={card.link}>Sign Up</Link>

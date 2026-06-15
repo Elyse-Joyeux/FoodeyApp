@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BackIcon, BellIcon } from './icons.js';
+import { useUser } from '../context/user-context.js';
+import { DEFAULT_AVATAR } from '../data/avatar.js';
 import styles from './topbar.module.css';
-
-const AVATAR = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=128&q=80&fit=crop&crop=faces';
 
 type TopbarProps = {
   title: string;
@@ -13,6 +13,7 @@ type TopbarProps = {
 /** Page header with back button, title, notifications bell and profile avatar. */
 export function Topbar({ title, subtitle }: TopbarProps) {
   const navigate = useNavigate();
+  const { user } = useUser();
   return (
     <header className={styles.topbar}>
       <div className={styles.left}>
@@ -30,7 +31,7 @@ export function Topbar({ title, subtitle }: TopbarProps) {
         </button>
         <span className={styles.divider} />
         <button className={styles.avatarBtn} onClick={() => navigate('/profile')} aria-label="Profile">
-          <img className={styles.avatar} src={AVATAR} alt="Profile" />
+          <img className={styles.avatar} src={user?.avatar || DEFAULT_AVATAR} alt="Profile" />
         </button>
       </div>
     </header>

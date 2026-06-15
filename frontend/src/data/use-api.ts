@@ -4,6 +4,12 @@ const GATEWAY = import.meta.env.VITE_BACKEND_URL || '';
 /** Base URL for the Foodey service, proxied through the platform gateway. */
 export const BASE = `${GATEWAY}/foodey-service/api`;
 
+function unwrap<T>(json: T | { items: T }): T {
+  return typeof json === 'object' && json !== null && 'items' in json
+    ? (json as { items: T }).items
+    : json as T;
+}
+
 /**
  * Generic data hook that fetches JSON from the Foodey backend.
  * Falls back to the provided default data when the request fails so the
@@ -19,7 +25,7 @@ export function useApi<T>(path: string, fallback: T) {
     setLoading(true);
     fetch(`${BASE}/${path}`, { credentials: 'include' })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((json) => { if (active) { setData(json); setLoading(false); } })
+      .then((json) => { if (active) { setData(unwrap<T>(json)); setLoading(false); } })
       .catch(() => { if (active) { setLoading(false); } });
     return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps

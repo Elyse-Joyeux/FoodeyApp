@@ -1,9 +1,12 @@
 import mongoose from 'mongoose';
+import { nanoid } from 'nanoid';
 
-const schemaOptions = { versionKey: false };
+const schemaOptions = { versionKey: false, timestamps: true };
+const createId = () => nanoid(14);
 
 const staffSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
+  restaurantId: String,
   name: String,
   role: String,
   email: String,
@@ -19,7 +22,8 @@ const staffSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const attendanceSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
+  restaurantId: String,
   name: String,
   role: String,
   avatar: String,
@@ -29,7 +33,7 @@ const attendanceSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const menuSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   itemId: String,
   name: String,
   description: String,
@@ -42,14 +46,14 @@ const menuSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const categorySchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   name: String,
   items: Number,
   icon: String,
 }, schemaOptions);
 
 const inventorySchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   name: String,
   image: String,
   stockInfo: String,
@@ -59,7 +63,7 @@ const inventorySchema = new mongoose.Schema({
 }, schemaOptions);
 
 const orderSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   number: String,
   customer: String,
   orderId: String,
@@ -72,7 +76,7 @@ const orderSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const reservationSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   email: String,
   customer: String,
   phone: String,
@@ -84,7 +88,7 @@ const reservationSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const notificationSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   title: String,
   message: String,
   date: String,
@@ -92,24 +96,34 @@ const notificationSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const accessUserSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
+  restaurantId: String,
   name: String,
-  email: String,
+  email: { type: String, lowercase: true, trim: true },
   role: String,
   permissions: Object,
 }, schemaOptions);
 
 const userSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   fullName: String,
-  email: String,
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: String,
+  restaurantId: String,
   restaurantName: String,
-  createdAt: { type: Date, default: Date.now },
+  avatar: String,
+  restaurantType: String,
+  employeeCount: Number,
+  chefCount: Number,
+  serviceStyle: String,
+  otpCodeHash: String,
+  otpExpiresAt: Date,
+  resetPasswordToken: String,
+  resetPasswordExpiresAt: Date,
 }, schemaOptions);
 
 const sessionSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String, default: createId },
   userId: { type: String, ref: 'User', required: true },
   createdAt: { type: Date, default: Date.now },
   expiresAt: { type: Date, required: true },

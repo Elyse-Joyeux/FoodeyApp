@@ -137,9 +137,9 @@ export function OrdersPage() {
 }
 
 function Badge({ status }: { status: Order['status'] }) {
-  if (status === 'In Process') return <span className={styles.badgeProcess}>⏱ In Process</span>;
+  if (status === 'In Process') return <span className={styles.badgeProcess}><ClockIcon size={14} /> In Process</span>;
   if (status === 'Completed') return <span className={styles.badgeDone}><CheckIcon size={14} /> Completed</span>;
-  if (status === 'Cancelled') return <span className={styles.badgeCancel}>✕ Cancelled</span>;
+  if (status === 'Cancelled') return <span className={styles.badgeCancel}><TrashIcon size={14} /> Cancelled</span>;
   return <span className={styles.badgeReady}><CheckIcon size={14} /> Ready</span>;
 }
 

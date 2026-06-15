@@ -6,10 +6,13 @@
 }
 
 .kpi {
-  background: var(--foodey-card);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.015)),
+    var(--foodey-card);
   border-radius: var(--foodey-radius-lg);
   padding: 20px 22px;
   border: 1px solid var(--foodey-border);
+  box-shadow: 0 22px 60px rgba(0,0,0,.24);
 }
 
 .kpiHead { display: flex; justify-content: space-between; align-items: flex-start; }
@@ -18,18 +21,18 @@
 .kpiIcon {
   display: grid; place-items: center;
   width: 38px; height: 38px; border-radius: 50%;
-  background: var(--foodey-orange); color: #1a1a1a;
+  background: linear-gradient(135deg, var(--foodey-orange), var(--foodey-orange-bright)); color: #1a1a1a;
 }
 
 .kpiFoot { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 18px; }
 .kpiFoot span { color: var(--foodey-text-muted); font-size: .8rem; }
 .bars { display: flex; align-items: flex-end; gap: 4px; height: 40px; }
-.bar { width: 5px; background: var(--foodey-green); border-radius: 2px; }
+.bar { width: 5px; background: linear-gradient(180deg, var(--foodey-orange), var(--foodey-green)); border-radius: 2px; }
 
 .dishesRow { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 24px; }
 
 .dishCard {
-  background: var(--foodey-card);
+  background: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.01)), var(--foodey-card);
   border-radius: var(--foodey-radius-lg);
   padding: 20px 22px;
   border: 1px solid var(--foodey-border);
@@ -51,10 +54,13 @@
 .dishPrice { font-weight: 600; font-size: .9rem; margin-top: 2px; }
 
 .overview {
-  background: var(--foodey-card);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(245,158,11,.16), transparent 30%),
+    var(--foodey-card);
   border-radius: var(--foodey-radius-lg);
   padding: 24px 26px;
   border: 1px solid var(--foodey-border);
+  box-shadow: 0 24px 70px rgba(0,0,0,.22);
 }
 .overviewHead { display: flex; justify-content: space-between; align-items: center; }
 .overviewHead h3 { margin: 0; font-size: 1.5rem; }

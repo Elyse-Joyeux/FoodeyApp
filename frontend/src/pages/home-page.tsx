@@ -3,18 +3,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PlayIcon, LeafIcon, ChefHatIcon, ShieldIcon, TrayIcon, UsersIcon, StarIcon, CartIcon, HamburgerIcon, MailIcon, ClockIcon } from '../components/icons.js';
 import styles from './home-page.module.css';
 
-const HERO_IMG = 'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=800&q=80';
+const HERO_IMG = 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=900&q=80&fit=crop';
 
 const STATS = [
-  { value: '120+', label: 'Delicious Dishes', Icon: TrayIcon },
-  { value: '500+', label: 'Happy customers', Icon: UsersIcon },
-  { value: '4.8', label: 'Top Rating', Icon: StarIcon },
+  { value: '18k+', label: 'Orders tracked monthly', Icon: TrayIcon },
+  { value: '240+', label: 'Teams coordinated', Icon: UsersIcon },
+  { value: '99.9%', label: 'Service visibility', Icon: StarIcon },
 ];
 
 const FEATURES = [
-  { title: 'Fresh Ingredients', desc: 'We use only the freshest ingredients for every dish.', Icon: LeafIcon },
-  { title: 'Expert Chef', desc: 'Our expert chefs craft the best meals for your clients.', Icon: ChefHatIcon },
-  { title: 'Quality Guarantee', desc: 'We promise the best restaurant quality.', Icon: ShieldIcon },
+  { title: 'Live Operations', desc: 'Track orders, reservations, staff, and inventory from one calm workspace.', Icon: LeafIcon },
+  { title: 'Kitchen Ready', desc: 'Keep chefs, waiters, and managers aligned on what needs attention now.', Icon: ChefHatIcon },
+  { title: 'Secure Access', desc: 'Give every team member the right permissions without exposing the whole business.', Icon: ShieldIcon },
+];
+
+const WORKFLOW = [
+  'Capture every reservation and order',
+  'Monitor low stock before service starts',
+  'Assign access for managers and floor teams',
+  'Export clean reports for daily decisions',
 ];
 
 /** Public marketing landing page. */
@@ -56,12 +63,12 @@ export function HomePage() {
 
       <section className={styles.hero}>
         <div className={styles.heroText}>
-          <p className={styles.kicker}>Are you willing to have your own restaurant?</p>
-          <h1 className={styles.title}>Don't Wait</h1>
-          <p className={styles.subtitle}>Start today</p>
+          <p className={styles.kicker}>Restaurant back-office and growth command center</p>
+          <h1 className={styles.title}>Run service with confidence.</h1>
+          <p className={styles.subtitle}>Foodey brings orders, reservations, inventory, reports, and team access into one polished workspace for modern restaurants.</p>
           <div className={styles.actions}>
-            <Link to="/signup" className={styles.tour}>Take a tour</Link>
-            <button className={styles.watch}><PlayIcon size={18} /> Watch video</button>
+            <Link to="/signup" className={styles.tour}>Start free workspace</Link>
+            <button className={styles.watch} onClick={() => navigate('/login')}><PlayIcon size={18} /> View dashboard</button>
           </div>
           <div className={styles.stats}>
             {STATS.map((s) => (
@@ -77,7 +84,11 @@ export function HomePage() {
         </div>
         <div className={styles.heroImage}>
           <img src={HERO_IMG} alt="Signature dish" />
-          <span className={styles.taste}>Taste the excellence</span>
+          <div className={styles.heroCard}>
+            <span className={styles.heroCardLabel}>Tonight's service</span>
+            <strong>126 orders</strong>
+            <small>Inventory and reservations synced</small>
+          </div>
         </div>
       </section>
 
@@ -91,6 +102,21 @@ export function HomePage() {
             </div>
           </div>
         ))}
+      </section>
+
+      <section className={styles.workflow}>
+        <div>
+          <p className={styles.sectionKicker}>Built for real service days</p>
+          <h2 className={styles.sectionTitle}>From opening prep to closing reports, Foodey keeps the restaurant moving.</h2>
+        </div>
+        <div className={styles.workflowList}>
+          {WORKFLOW.map((item, index) => (
+            <div key={item} className={styles.workflowItem}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <p>{item}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <ContactSection />

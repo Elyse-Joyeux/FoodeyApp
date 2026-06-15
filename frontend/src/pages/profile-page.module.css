@@ -13,6 +13,14 @@
 .field { margin-bottom: 20px; }
 .fieldLabel { display: block; font-weight: 700; margin-bottom: 8px; }
 .fieldInput { background: var(--foodey-card-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 16px 18px; color: var(--foodey-text); width: 100%; outline: none; }
+.avatarPanel { background: var(--foodey-card-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 16px; margin-bottom: 20px; }
+.avatarPanelHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-weight: 700; }
+.uploadBtn { color: var(--foodey-orange); border: 1px solid var(--foodey-orange); border-radius: 999px; padding: 8px 12px; cursor: pointer; font-size: .82rem; }
+.uploadBtn input { display: none; }
+.avatarChoices { display: flex; flex-wrap: wrap; gap: 10px; }
+.avatarChoice { width: 54px; height: 54px; padding: 0; border-radius: 16px; border: 2px solid transparent; background: none; cursor: pointer; overflow: hidden; }
+.avatarChoice img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatarChoiceActive { border-color: var(--foodey-orange); box-shadow: 0 0 0 4px rgba(255,165,0,.12); }
 .passInput { background: var(--foodey-card-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 0 18px; display: flex; justify-content: space-between; align-items: center; color: var(--foodey-text-dim); }
 .passField { flex: 1; background: none; border: none; outline: none; color: var(--foodey-text); padding: 16px 0; }
 .passEye { background: none; border: none; color: var(--foodey-orange); cursor: pointer; display: grid; place-items: center; }
@@ -22,6 +30,7 @@
 .discard { background: none; border: none; color: var(--foodey-text); cursor: pointer; }
 .discard:disabled { color: var(--foodey-text-muted); cursor: not-allowed; }
 .save { background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 14px 30px; font-weight: 700; cursor: pointer; }
+.error { color: var(--foodey-red); margin: 0 0 10px; font-size: .9rem; }
 
 .accessUser { padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--foodey-border); }
 .accessHead { display: flex; align-items: center; gap: 12px; }
@@ -31,6 +40,7 @@
 .perms { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 20px; }
 .permLabel { font-weight: 700; margin-bottom: 12px; }
 .toggle { display: inline-flex; align-items: center; width: 46px; height: 26px; border-radius: 14px; padding: 3px; border: none; cursor: pointer; transition: background .2s ease; }
+.toggle:disabled { opacity: .45; cursor: not-allowed; }
 .toggleOn { background: var(--foodey-orange); justify-content: flex-end; }
 .toggleOff { background: var(--foodey-card-hover); justify-content: flex-start; }
 .knob { width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: all .2s ease; }
@@ -51,5 +61,6 @@
 .addBtn { display: inline-flex; align-items: center; gap: 8px; background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 13px 28px; font-weight: 700; cursor: pointer; transition: filter .2s ease; }
 .addBtn:hover { filter: brightness(1.05); }
 .removeUser { margin-left: auto; background: none; border: 1px solid var(--foodey-red); color: var(--foodey-red); border-radius: 8px; padding: 6px 14px; cursor: pointer; font-size: .82rem; }
+.removeUser:disabled { border-color: var(--foodey-border); color: var(--foodey-text-muted); cursor: not-allowed; }
 
 @media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } .perms { grid-template-columns: 1fr 1fr; } .twoCol { grid-template-columns: 1fr; } .addGrid { grid-template-columns: 1fr; } }

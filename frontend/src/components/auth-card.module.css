@@ -59,7 +59,8 @@
   color: var(--foodey-orange);
 }
 
-.inputWrap input {
+.inputWrap input,
+.inputWrap select {
   flex: 1;
   background: none;
   border: none;
@@ -67,9 +68,11 @@
   color: var(--foodey-text);
   padding: 14px 0;
   font-size: .95rem;
+  font-family: inherit;
 }
 
 .inputWrap input::placeholder { color: var(--foodey-text-muted); }
+.inputWrap select option { color: #1a1a1a; }
 
 .eye { background: none; border: none; color: var(--foodey-orange); cursor: pointer; display: grid; place-items: center; }
 
@@ -141,3 +144,20 @@
 
 .terms { font-size: .9rem; color: var(--foodey-text-dim); display: flex; align-items: center; gap: 8px; margin: 16px 0; }
 .terms input { accent-color: var(--foodey-orange); width: 16px; height: 16px; }
+
+.steps { display: flex; justify-content: center; gap: 8px; margin: -12px 0 18px; }
+.stepDot { width: 34px; height: 4px; border-radius: 999px; background: var(--foodey-card-hover); }
+.stepDotActive { background: var(--foodey-orange); }
+.twoCols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.passwordRules { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+.sectionNote { color: var(--foodey-orange); font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin: 18px 0 -4px; }
+.rule, .ruleOk { border: 1px solid var(--foodey-border); border-radius: 999px; padding: 6px 9px; font-size: .76rem; color: var(--foodey-text-dim); }
+.ruleOk { border-color: var(--foodey-green); color: var(--foodey-green); background: rgba(34,197,94,.08); }
+.stepActions { display: flex; gap: 12px; margin-top: 6px; }
+.stepActions .primary { margin-top: 0; }
+.secondary { min-width: 110px; background: transparent; color: var(--foodey-orange); border: 1px solid var(--foodey-orange); border-radius: 30px; padding: 15px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+
+@media (max-width: 520px) {
+  .twoCols { grid-template-columns: 1fr; gap: 0; }
+  .stepActions { flex-direction: column; }
+}

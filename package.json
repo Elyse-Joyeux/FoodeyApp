@@ -14,10 +14,15 @@
     "typecheck": "tsc -p tsconfig.frontend.json --noEmit"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
     "mongoose": "^8.9.5",
+    "morgan": "^1.11.0",
+    "nanoid": "^5.1.11",
+    "nodemailer": "^9.0.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.16.0"

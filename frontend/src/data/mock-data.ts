@@ -2,8 +2,9 @@ import type {
   StaffMember, AttendanceRecord, MenuItem, MenuCategory, InventoryItem,
   Order, Reservation, Notification, Dish, DashboardStats, ReservationSummary,
 } from '../types.js';
+import { DEFAULT_AVATAR } from './avatar.js';
 
-const AVATAR = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=128&q=80&fit=crop&crop=faces';
+const AVATAR = DEFAULT_AVATAR;
 const DISH_IMG = 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=200&q=80';
 
 const STAFF_NAMES = ['Jacques Kagabo', 'Aline Uwase', 'Eric Mugisha', 'Sandra Keza', 'David Niyonzima', 'Grace Ingabire', 'Patrick Habimana', 'Diane Umutoni', 'Kevin Rwego', 'Sarah Mukamana'];

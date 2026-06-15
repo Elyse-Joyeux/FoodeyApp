@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Topbar } from '../components/topbar.js';
-import { CalendarIcon } from '../components/icons.js';
-import { useApi } from '../data/use-api.js';
+import { CalendarIcon, ExportIcon } from '../components/icons.js';
+import { BASE, useApi } from '../data/use-api.js';
 import { mockReservationSummary, mockReservations } from '../data/mock-data.js';
 import type { ReservationSummary, Reservation } from '../types.js';
 import styles from './reports-page.module.css';
@@ -20,10 +20,30 @@ export function ReportsPage() {
   });
   const [tab, setTab] = useState(0);
   const [statusTab, setStatusTab] = useState('All');
+  const [exporting, setExporting] = useState(false);
 
   const shown = statusTab === 'All'
     ? data.reservations
     : data.reservations.filter((r) => r.status === statusTab);
+
+  const exportCsv = async () => {
+    setExporting(true);
+    try {
+      const response = await fetch(`${BASE}/reports/reservations/export`, { credentials: 'include' });
+      if (!response.ok) throw new Error('Export failed');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'foodey-reservations-report.csv';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExporting(false);
+    }
+  };
 
   return (
     <>
@@ -37,7 +57,9 @@ export function ReportsPage() {
         </div>
         <div className={styles.toolRight}>
           <div className={styles.dateRange}><CalendarIcon size={18} /> 01/04/2026 - 08/04/2026</div>
-          <button className={styles.generate}>Generate Report</button>
+          <button className={styles.generate} onClick={exportCsv} disabled={exporting}>
+            <ExportIcon size={16} /> {exporting ? 'Exporting...' : 'Export CSV'}
+          </button>
         </div>
       </div>
 

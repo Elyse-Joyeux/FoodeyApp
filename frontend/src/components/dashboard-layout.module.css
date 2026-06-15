@@ -1,7 +1,9 @@
 .layout {
   display: flex;
   min-height: 100vh;
-  background: var(--foodey-bg);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.02), transparent 38%),
+    var(--foodey-bg);
 }
 
 .content {

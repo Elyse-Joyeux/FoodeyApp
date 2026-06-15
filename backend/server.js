@@ -2,6 +2,7 @@ import cors from 'cors';
 import crypto from 'node:crypto';
 import express from 'express';
 import mongoose from 'mongoose';
+import { run as productionRun } from './app.js';
 import {
   AccessUser,
   Attendance,
@@ -17,7 +18,9 @@ import {
 } from './models.js';
 import { seed } from './seed.js';
 
-const AVATAR = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=128&q=80&fit=crop&crop=faces';
+export const run = productionRun;
+
+const AVATAR = `data:image/svg+xml;utf8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><rect width="128" height="128" rx="32" fill="#f97316"/><circle cx="64" cy="48" r="22" fill="#1f1308"/><path d="M24 111c6-24 21-38 40-38s34 14 40 38" fill="#1f1308"/></svg>')}`;
 const DISH_IMG = 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=200&q=80';
 
 // Disable buffered commands to fail fast if disconnected
@@ -150,7 +153,7 @@ async function connectMongo() {
 /**
  * Boots the Foodey express service with MongoDB-backed REST endpoints.
  */
-export function run() {
+function legacyRun() {
   const app = express();
   const port = process.env.PORT || 3000;
 

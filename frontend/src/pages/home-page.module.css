@@ -65,9 +65,9 @@
   gap: 30px;
 }
 
-.kicker { color: #fff; font-size: 1.05rem; margin: 0 0 12px; }
-.title { font-size: 4.5rem; font-weight: 800; color: #fff; margin: 0; line-height: 1; }
-.subtitle { font-size: 1.8rem; color: var(--foodey-orange); margin: 10px 0 36px; }
+.kicker { color: var(--foodey-orange); font-size: .95rem; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; margin: 0 0 12px; }
+.title { font-size: clamp(3rem, 7vw, 6.2rem); font-weight: 900; color: #fff; margin: 0; line-height: .95; max-width: 720px; letter-spacing: -.05em; }
+.subtitle { font-size: 1.15rem; line-height: 1.7; color: #d8d8d8; margin: 22px 0 36px; max-width: 560px; }
 
 .actions { display: flex; gap: 18px; margin-bottom: 46px; }
 .tour {
@@ -106,15 +106,24 @@
   object-fit: cover;
   border: 8px solid #fff;
 }
-.taste {
+.heroCard {
   position: absolute;
-  right: -10px;
-  top: 30%;
-  font-style: italic;
-  color: #1a1a1a;
-  font-size: 1.2rem;
-  font-weight: 600;
+  left: 0;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 230px;
+  background: rgba(17,17,17,.88);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 20px;
+  padding: 18px 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.45);
+  backdrop-filter: blur(10px);
 }
+.heroCardLabel { color: var(--foodey-orange); font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
+.heroCard strong { color: #fff; font-size: 1.7rem; }
+.heroCard small { color: #bbb; }
 
 .featuresBar {
   position: relative;
@@ -140,6 +149,27 @@
 }
 .featureTitle { color: #fff; font-weight: 700; font-size: 1.2rem; }
 .featureDesc { color: #aaa; font-size: .85rem; }
+
+.workflow {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 36px;
+  margin: 0 56px 56px;
+  padding: 44px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,165,0,.18), transparent 30%),
+    linear-gradient(135deg, #15110b, #0f0f0f);
+  border: 1px solid rgba(255,165,0,.18);
+}
+.sectionKicker { color: var(--foodey-orange); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 800; margin: 0 0 12px; }
+.sectionTitle { color: #fff; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.05; margin: 0; letter-spacing: -.03em; }
+.workflowList { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.workflowItem { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 18px; }
+.workflowItem span { color: var(--foodey-orange); font-weight: 900; font-size: .85rem; }
+.workflowItem p { color: #f4f4f4; margin: 10px 0 0; line-height: 1.5; }
 
 .contact {
   position: relative;
@@ -175,6 +205,8 @@
 
 @media (max-width: 900px) {
   .contact { grid-template-columns: 1fr; margin: 0 20px 40px; padding: 30px; }
+  .workflow { grid-template-columns: 1fr; margin: 0 20px 40px; padding: 30px; }
+  .workflowList { grid-template-columns: 1fr; }
   .hero { grid-template-columns: 1fr; }
   .heroImage img { width: 300px; height: 300px; }
   .featuresBar { grid-template-columns: 1fr; }

@@ -5,22 +5,22 @@ import {
   GridIcon, MenuBookIcon, StaffIcon, BoxIcon, ReportIcon,
   OrderIcon, ReservationIcon, LogoutIcon,
 } from './icons.js';
-import { useUser } from '../context/user-context.js';
+import { useUser, type Permission } from '../context/user-context.js';
 import styles from './sidebar.module.css';
 
 const NAV = [
-  { to: '/dashboard', label: 'Dashboard', Icon: GridIcon },
-  { to: '/menu', label: 'Menu', Icon: MenuBookIcon },
-  { to: '/staff', label: 'Staff', Icon: StaffIcon },
-  { to: '/inventory', label: 'Inventory', Icon: BoxIcon },
-  { to: '/reports', label: 'Reports', Icon: ReportIcon },
-  { to: '/orders', label: 'Order/Table', Icon: OrderIcon },
-  { to: '/reservations', label: 'Reservation', Icon: ReservationIcon },
+  { to: '/dashboard', label: 'Dashboard', Icon: GridIcon, permission: 'Dashboard' },
+  { to: '/menu', label: 'Menu', Icon: MenuBookIcon, permission: 'Inventory' },
+  { to: '/staff', label: 'Staff', Icon: StaffIcon, permission: 'Settings' },
+  { to: '/inventory', label: 'Inventory', Icon: BoxIcon, permission: 'Inventory' },
+  { to: '/reports', label: 'Reports', Icon: ReportIcon, permission: 'Reports' },
+  { to: '/orders', label: 'Order/Table', Icon: OrderIcon, permission: 'Orders' },
+  { to: '/reservations', label: 'Reservation', Icon: ReservationIcon, permission: 'Orders' },
 ];
 
 /** Left navigation rail used across all dashboard pages. */
 export function Sidebar() {
-  const { logout } = useUser();
+  const { logout, hasPermission } = useUser();
 
   return (
     <aside className={styles.sidebar}>
@@ -28,7 +28,7 @@ export function Sidebar() {
         <Logo />
       </div>
       <nav className={styles.nav}>
-        {NAV.map(({ to, label, Icon }) => (
+        {NAV.filter((item) => hasPermission(item.permission as Permission)).map(({ to, label, Icon }) => (
           <NavLink
             key={to}
             to={to}

@@ -6,3 +6,4 @@ frontend/dist
 
 .vercel
 .env*
+!.env.example

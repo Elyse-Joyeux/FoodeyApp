@@ -4,10 +4,11 @@
 .tabActive { background: var(--foodey-orange); color: #1a1a1a; font-weight: 600; }
 .toolRight { display: flex; gap: 14px; align-items: center; }
 .dateRange { display: flex; align-items: center; gap: 10px; background: var(--foodey-card-2); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 13px 18px; color: var(--foodey-text); font-size: .9rem; }
-.generate { background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 14px 28px; font-weight: 700; cursor: pointer; }
+.generate { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 14px 28px; font-weight: 700; cursor: pointer; }
+.generate:disabled { opacity: .7; cursor: wait; }
 
 .cards { display: grid; grid-template-columns: 1fr 1.2fr; gap: 22px; margin-bottom: 24px; }
-.donutCard, .statusCard { background: var(--foodey-card); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius-lg); padding: 26px; }
+.donutCard, .statusCard { background: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.01)), var(--foodey-card); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius-lg); padding: 26px; box-shadow: 0 24px 70px rgba(0,0,0,.22); }
 .cardTitle { font-size: 1.7rem; margin: 0 0 20px; }
 .donutRow { display: flex; align-items: center; gap: 30px; }
 .donut { width: 230px; flex-shrink: 0; }
@@ -28,7 +29,7 @@
 
 .tableHead { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; padding: 0 22px 12px; color: var(--foodey-orange); font-size: .82rem; }
 .tableWrap { display: flex; flex-direction: column; gap: 4px; }
-.row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; background: var(--foodey-card); border-radius: var(--foodey-radius); padding: 18px 22px; font-size: .88rem; align-items: center; }
+.row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; background: var(--foodey-card); border: 1px solid rgba(255,255,255,.04); border-radius: var(--foodey-radius); padding: 18px 22px; font-size: .88rem; align-items: center; }
 .row:nth-child(even) { background: var(--foodey-card-2); }
 .email { color: var(--foodey-text-dim); }
 .totalCell { font-weight: 700; }

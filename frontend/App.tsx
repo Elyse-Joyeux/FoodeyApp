@@ -1,7 +1,8 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './src/App.css';
 import { DashboardLayout } from './src/components/dashboard-layout.js';
+import { useUser, type Permission } from './src/context/user-context.js';
 import { HomePage } from './src/pages/home-page.js';
 import { LoginPage } from './src/pages/login-page.js';
 import { SignupPage } from './src/pages/signup-page.js';
@@ -22,6 +23,25 @@ function Shell({ children }: { children: React.ReactNode }) {
   return <DashboardLayout>{children}</DashboardLayout>;
 }
 
+function Protected({ permission, children }: { permission?: Permission; children: React.ReactNode }) {
+  const { user, isLoading, hasPermission } = useUser();
+  const location = useLocation();
+
+  if (isLoading) return null;
+  if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (permission && !hasPermission(permission)) {
+    return (
+      <Shell>
+        <div style={{ padding: 32, color: '#fff' }}>
+          <h1>Access restricted</h1>
+          <p>Your account does not include permission for this workspace area.</p>
+        </div>
+      </Shell>
+    );
+  }
+  return <Shell>{children}</Shell>;
+}
+
 /** Root application with public marketing/auth routes and the dashboard app routes. */
 export function FoodeyApp() {
   return (
@@ -31,16 +51,16 @@ export function FoodeyApp() {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-      <Route path="/dashboard" element={<Shell><DashboardPage /></Shell>} />
-      <Route path="/menu" element={<Shell><MenuPage /></Shell>} />
-      <Route path="/staff" element={<Shell><StaffPage /></Shell>} />
-      <Route path="/staff/:id" element={<Shell><StaffDetailPage /></Shell>} />
-      <Route path="/inventory" element={<Shell><InventoryPage /></Shell>} />
-      <Route path="/reports" element={<Shell><ReportsPage /></Shell>} />
-      <Route path="/orders" element={<Shell><OrdersPage /></Shell>} />
-      <Route path="/reservations" element={<Shell><ReservationsPage /></Shell>} />
-      <Route path="/notifications" element={<Shell><NotificationsPage /></Shell>} />
-      <Route path="/profile" element={<Shell><ProfilePage /></Shell>} />
+      <Route path="/dashboard" element={<Protected permission="Dashboard"><DashboardPage /></Protected>} />
+      <Route path="/menu" element={<Protected permission="Inventory"><MenuPage /></Protected>} />
+      <Route path="/staff" element={<Protected permission="Settings"><StaffPage /></Protected>} />
+      <Route path="/staff/:id" element={<Protected permission="Settings"><StaffDetailPage /></Protected>} />
+      <Route path="/inventory" element={<Protected permission="Inventory"><InventoryPage /></Protected>} />
+      <Route path="/reports" element={<Protected permission="Reports"><ReportsPage /></Protected>} />
+      <Route path="/orders" element={<Protected permission="Orders"><OrdersPage /></Protected>} />
+      <Route path="/reservations" element={<Protected permission="Orders"><ReservationsPage /></Protected>} />
+      <Route path="/notifications" element={<Protected permission="Dashboard"><NotificationsPage /></Protected>} />
+      <Route path="/profile" element={<Protected><ProfilePage /></Protected>} />
     </Routes>
   );
 }

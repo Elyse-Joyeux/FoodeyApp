@@ -1,7 +1,7 @@
 .headRow { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .count { font-size: 1.6rem; font-weight: 700; margin: 0; }
 .headActions { display: flex; gap: 14px; }
-.addBtn { background: var(--foodey-orange); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 12px 26px; font-weight: 700; cursor: pointer; }
+.addBtn { background: linear-gradient(135deg, var(--foodey-orange), var(--foodey-orange-bright)); color: #1a1a1a; border: none; border-radius: var(--foodey-radius); padding: 12px 26px; font-weight: 700; cursor: pointer; box-shadow: 0 14px 34px rgba(245,158,11,.18); }
 .sortWrap { position: relative; }
 .sortBtn { display: flex; align-items: center; gap: 8px; background: var(--foodey-card-2); color: var(--foodey-text-dim); border: 1px solid var(--foodey-border); border-radius: var(--foodey-radius); padding: 12px 20px; cursor: pointer; }
 .sortBackdrop { position: fixed; inset: 0; z-index: 8; }
@@ -14,14 +14,14 @@
 .tab { background: none; border: none; color: var(--foodey-text-dim); padding: 11px 22px; border-radius: 10px; cursor: pointer; font-size: .95rem; }
 .tabActive { background: var(--foodey-orange); color: #1a1a1a; font-weight: 600; }
 
-.tableWrap { background: var(--foodey-bg-2); border-radius: var(--foodey-radius-lg); overflow: hidden; border: 1px solid var(--foodey-border); }
+.tableWrap { background: linear-gradient(145deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), var(--foodey-bg-2); border-radius: var(--foodey-radius-lg); overflow: hidden; border: 1px solid var(--foodey-border); box-shadow: 0 24px 70px rgba(0,0,0,.24); }
 .table { width: 100%; border-collapse: collapse; }
 .table thead th { text-align: left; padding: 16px 14px; color: var(--foodey-text-dim); font-weight: 500; font-size: .9rem; border-bottom: 1px solid var(--foodey-border); }
 .table tbody td { padding: 14px; font-size: .9rem; }
 .table tbody tr:nth-child(even) { background: var(--foodey-card); }
 
 .nameCell { display: flex; align-items: center; gap: 12px; }
-.rowAvatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+.rowAvatar { width: 38px; height: 38px; border-radius: 14px; object-fit: cover; border: 1px solid rgba(255,255,255,.08); }
 .role { color: var(--foodey-orange); font-size: .8rem; }
 
 .rowActions { display: flex; gap: 12px; align-items: center; }
