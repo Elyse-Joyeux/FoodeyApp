@@ -480,16 +480,16 @@ function legacyRun() {
 
   // Global Error Handler
   app.use((error, _req, res, _next) => {
-    console.error('🚨 Unexpected Server Error:', error);
+    console.error('Unexpected Server Error:', error);
     res.status(500).json({ error: error instanceof Error ? error.message : 'Unexpected server error' });
   });
 
   const server = app.listen(port, () => {
-    console.log(`🚀 Foodey service ready at: http://localhost:${port}`);
+    console.log(`Foodey service ready at: http://localhost:${port}`);
   });
 
   connectMongo().catch((error) => {
-    console.error('❌ Failed to establish initial database connection:', error.message);
+    console.error('Failed to establish initial database connection:', error.message);
   });
 
   return {

@@ -311,10 +311,11 @@ async function sendOtpEmail({ to, code }) {
 
 async function sendWelcomeEmail({ to, name, restaurantName }) {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
+  const appUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
   const subject = `Welcome to Foodey, ${name}`;
-  const text = `Welcome to Foodey. Your restaurant workspace "${restaurantName}" is ready. You can now manage staff, orders, inventory, reports, reservations, and access from your dashboard.`;
+  const text = `Welcome to Foodey. Your restaurant workspace "${restaurantName}" is ready. Sign in here: ${appUrl}/login`;
   if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
-    console.log(`Welcome email for ${to}: ${text}`);
+    console.log(`Welcome email fallback for ${to}: ${text}`);
     return;
   }
 
@@ -337,6 +338,7 @@ async function sendWelcomeEmail({ to, name, restaurantName }) {
           <p>Hi ${name},</p>
           <p>Your restaurant workspace <strong>${restaurantName}</strong> is ready.</p>
           <p>You can now manage staff, orders, inventory, reports, reservations, and team access from your dashboard.</p>
+          <p><a href="${appUrl}/login" style="display:inline-block;background:#f59e0b;color:#111827;text-decoration:none;border-radius:999px;padding:12px 18px;font-weight:700">Open Foodey</a></p>
           <p style="color:#94a3b8">Thanks for choosing Foodey.</p>
         </div>
       </div>
@@ -367,6 +369,14 @@ function scoped(req, extra = {}) {
 
 function isProtectedAccessRow(row, req) {
   return row.role === 'Owner' || row.email === req.user.email;
+}
+
+function ownerPayload(user) {
+  return {
+    ...out(user),
+    role: 'Owner',
+    permissions: Object.fromEntries(PERMISSIONS.map((permission) => [permission, true])),
+  };
 }
 
 async function connectMongo() {
@@ -582,8 +592,9 @@ export function run() {
     ].filter(Boolean);
     if (staffToCreate.length) await Staff.insertMany(staffToCreate);
     await createSession(res, user.id);
-    await sendWelcomeEmail({ to: user.email, name: user.fullName, restaurantName: user.restaurantName });
-    res.status(201).json(await publicUser(user));
+    sendWelcomeEmail({ to: user.email, name: user.fullName, restaurantName: user.restaurantName })
+      .catch((error) => console.error('Welcome email failed:', error.message));
+    res.status(201).json(ownerPayload(user));
   }));
 
   apiRouter.post('/auth/login', validate({

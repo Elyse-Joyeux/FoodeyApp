@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Topbar } from "../components/topbar.js";
 import {
@@ -36,8 +36,13 @@ const FALLBACK: AccessUser[] = [];
 /** Profile page with My Profile and Manage Access sections. */
 export function ProfilePage() {
   const [section, setSection] = useState<Section>("profile");
-  const { logout } = useUser();
+  const { logout, hasPermission } = useUser();
   const navigate = useNavigate();
+  const canManageAccess = hasPermission("Settings");
+
+  useEffect(() => {
+    if (!canManageAccess && section === "access") setSection("profile");
+  }, [canManageAccess, section]);
 
   return (
     <>
@@ -50,12 +55,14 @@ export function ProfilePage() {
           >
             <UserIcon size={20} /> My Profile
           </button>
-          <button
-            className={`${styles.menuItem} ${section === "access" ? styles.menuActive : ""}`}
-            onClick={() => setSection("access")}
-          >
-            <ChevronDown size={20} /> Manage Access
-          </button>
+          {canManageAccess && (
+            <button
+              className={`${styles.menuItem} ${section === "access" ? styles.menuActive : ""}`}
+              onClick={() => setSection("access")}
+            >
+              <ChevronDown size={20} /> Manage Access
+            </button>
+          )}
           <button
             className={styles.menuItem}
             onClick={() => {
@@ -75,7 +82,7 @@ export function ProfilePage() {
 
 function MyProfile() {
   const { user, updateProfile } = useUser();
-  const INITIAL = {
+  const INITIAL = useMemo(() => ({
     name: user?.fullName || "Jacques Kagabo",
     email: user?.email || "kagabo12@gmail.com",
     restaurantName: user?.restaurantName || "Foodey",
@@ -83,9 +90,10 @@ function MyProfile() {
     address: "123 Street, Kigali, Gikondo",
     password: "",
     confirm: "",
-  };
+  }), [user?.avatar, user?.email, user?.fullName, user?.restaurantName]);
   const [profile, setProfile] = useState(INITIAL);
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const dirty = JSON.stringify(profile) !== JSON.stringify(INITIAL);
   const set = (k: keyof typeof INITIAL) => (v: string) =>
@@ -96,6 +104,10 @@ function MyProfile() {
     reader.onload = () => setProfile((p) => ({ ...p, avatar: String(reader.result || DEFAULT_AVATAR) }));
     reader.readAsDataURL(file);
   };
+
+  useEffect(() => {
+    setProfile(INITIAL);
+  }, [INITIAL]);
 
   return (
     <div className={styles.card}>
@@ -161,30 +173,54 @@ function MyProfile() {
         </button>
         <button
           className={styles.save}
+          disabled={saving}
           onClick={async () => {
             setError("");
             if (profile.password && profile.password !== profile.confirm) {
               setError("Passwords do not match.");
               return;
             }
+            setSaving(true);
             try {
-              await updateProfile({
+              const updated = await updateProfile({
                 fullName: profile.name,
                 email: profile.email,
                 restaurantName: profile.restaurantName,
                 avatar: profile.avatar,
               });
+              if (updated) {
+                setProfile((current) => ({
+                  ...current,
+                  name: updated.fullName,
+                  email: updated.email,
+                  restaurantName: updated.restaurantName,
+                  avatar: updated.avatar || DEFAULT_AVATAR,
+                  password: "",
+                  confirm: "",
+                }));
+              }
               setSaved(true);
               setTimeout(() => setSaved(false), 1500);
             } catch (err) {
               setError(err instanceof Error ? err.message : "Profile update failed.");
+            } finally {
+              setSaving(false);
             }
           }}
         >
-          {saved ? "Saved" : "Save Changes"}
+          {saving ? <><ReloadIcon /> Saving...</> : saved ? "Saved" : "Save Changes"}
         </button>
       </div>
     </div>
+  );
+}
+
+function ReloadIcon() {
+  return (
+    <svg className={styles.reloadIcon} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+      <path d="M20 4v5h-5" />
+    </svg>
   );
 }
 
@@ -204,6 +240,9 @@ function ManageAccess() {
   const [accessError, setAccessError] = useState("");
 
   const toggle = async (userId: string, perm: Perm) => {
+    const target = users.find((u) => u.id === userId);
+    if (!target || target.protected) return;
+    const previous = users;
     let next = false;
     setData((prev) =>
       prev.map((u) => {
@@ -212,7 +251,11 @@ function ManageAccess() {
         return { ...u, permissions: { ...u.permissions, [perm]: next } };
       }),
     );
-    await apiPut(`access-users/${userId}/permission`, { perm, value: next });
+    const updated = await apiPut(`access-users/${userId}/permission`, { perm, value: next });
+    if (!updated) {
+      setData(previous);
+      setAccessError("This access row is protected or could not be updated.");
+    }
   };
 
   const addUser = async () => {
@@ -236,8 +279,15 @@ function ManageAccess() {
   };
 
   const removeUser = async (id: string) => {
+    const target = users.find((u) => u.id === id);
+    if (!target || target.protected) return;
+    const previous = users;
     setData((prev) => prev.filter((u) => u.id !== id));
-    await apiDelete(`access-users/${id}`);
+    const ok = await apiDelete(`access-users/${id}`);
+    if (!ok) {
+      setData(previous);
+      setAccessError("This access row is protected or could not be removed.");
+    }
   };
 
   return (

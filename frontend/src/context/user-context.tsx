@@ -24,6 +24,27 @@ const DEFAULT_PERMISSIONS: Permissions = {
   Settings: false,
 };
 
+const OWNER_PERMISSIONS: Permissions = {
+  Dashboard: true,
+  Reports: true,
+  Inventory: true,
+  Orders: true,
+  Settings: true,
+};
+
+function normalizeUser(data: any): User {
+  const isOwner = data.role === 'Owner';
+  return {
+    id: data.id,
+    fullName: data.fullName,
+    email: data.email,
+    restaurantName: data.restaurantName,
+    avatar: data.avatar,
+    role: data.role,
+    permissions: isOwner ? OWNER_PERMISSIONS : { ...DEFAULT_PERMISSIONS, ...(data.permissions || {}) },
+  };
+}
+
 type UserContextType = {
   user: User | null;
   isLoading: boolean;
@@ -64,15 +85,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       .then((response) => (response.ok ? response.json() : null))
       .then((data) => {
         if (active && data) {
-          setUser({
-            id: data.id,
-            fullName: data.fullName,
-            email: data.email,
-            restaurantName: data.restaurantName,
-            avatar: data.avatar,
-            role: data.role,
-            permissions: { ...DEFAULT_PERMISSIONS, ...(data.permissions || {}) },
-          });
+          setUser(normalizeUser(data));
         }
       })
       .catch(() => {
@@ -106,15 +119,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       }
 
       const data = await response.json();
-      const userData: User = {
-        id: data.id,
-        fullName: data.fullName,
-        email: data.email,
-        restaurantName: data.restaurantName,
-        avatar: data.avatar,
-        role: data.role,
-        permissions: { ...DEFAULT_PERMISSIONS, ...(data.permissions || {}) },
-      };
+      const userData = normalizeUser(data);
 
       setUser(userData);
       return userData;
@@ -145,15 +150,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'OTP verification failed');
-    const userData: User = {
-      id: data.id,
-      fullName: data.fullName,
-      email: data.email,
-      restaurantName: data.restaurantName,
-      avatar: data.avatar,
-      role: data.role,
-      permissions: { ...DEFAULT_PERMISSIONS, ...(data.permissions || {}) },
-    };
+    const userData = normalizeUser(data);
     setUser(userData);
     return userData;
   };
@@ -173,15 +170,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       }
 
       const data = await response.json();
-      const userData: User = {
-        id: data.id,
-        fullName: data.fullName,
-        email: data.email,
-        restaurantName: data.restaurantName,
-        avatar: data.avatar,
-        role: data.role,
-        permissions: { ...DEFAULT_PERMISSIONS, ...(data.permissions || {}) },
-      };
+      const userData = normalizeUser(data);
 
       setUser(userData);
       return userData;
@@ -211,15 +200,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       throw new Error(error.error || 'Profile update failed');
     }
     const data = await response.json();
-    const userData: User = {
-      id: data.id,
-      fullName: data.fullName,
-      email: data.email,
-      restaurantName: data.restaurantName,
-      avatar: data.avatar,
-      role: data.role,
-      permissions: { ...DEFAULT_PERMISSIONS, ...(data.permissions || {}) },
-    };
+    const userData = normalizeUser(data);
     setUser(userData);
     return userData;
   };
